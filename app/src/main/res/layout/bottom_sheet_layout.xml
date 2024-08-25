@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg">
+
+    <TextView
+        android:id="@+id/chooseText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Buat buku pertamamu"
+        android:textAlignment="center"
+        android:textColor="@color/color1"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layoutInputBookName"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masukan Nama Bukumu"
+            android:textColor="@color/color1"
+            android:textSize="18sp"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="17dp"
+            android:letterSpacing="0.1"/>
+
+        <EditText
+            android:id="@+id/inputBookName"
+            android:focusableInTouchMode="true"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:lineHeight="5dp"
+            android:textColor="@color/color1"
+            android:textSize="18sp"
+            android:hint="Contoh: Toko Maju Sederhana"
+            android:textColorHint="@color/color7"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutKeperluanPenggunaan"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keperluan Penggunaan"
+            android:textColor="@color/color1"
+            android:textSize="18sp"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="17dp"
+            android:letterSpacing="0.1"/>
+        
+        <EditText
+            android:id="@+id/inputKeperluanPengguna"
+            android:focusableInTouchMode="true"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:lineHeight="5dp"
+            android:textColor="@color/color1"
+            android:textSize="18sp"
+            android:hint="Pilih kategori"
+            android:textColorHint="@color/color7"
+            />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonToHomePage"
+        android:onClick="toHomePage"
+        android:layout_width="600px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:text="Buat"
+        android:textColor="@color/color2"
+        android:backgroundTint="@color/color5"/>
+
+</LinearLayout>

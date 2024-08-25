@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cuan (Beta Version)</string>
+    <string name="emptyInputField">Field nama buku dan keperluan tidak boleh kosong</string>
+    <string name="suksesMembuatToko">Toko berhasil dibuat</string>
+    <string name="namaToko">Nama Toko : %1$s</string>
+    <string name="keperluanPenggunaan">Keperluan : %1$s</string>
+</resources>
