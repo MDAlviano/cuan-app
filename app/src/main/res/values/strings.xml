@@ -4,4 +4,6 @@
     <string name="suksesMembuatToko">Toko berhasil dibuat</string>
     <string name="namaToko">Nama Toko : %1$s</string>
     <string name="keperluanPenggunaan">Keperluan : %1$s</string>
+    <string name="totalPemasukan">Rp500.000</string>
+    <string name="totalPengeluaran">Rp15.000</string>
 </resources>
