@@ -9,4 +9,11 @@
         android:topRightRadius="15dp"
         />
 
+    <padding
+        android:left="20dp"
+        android:right="20dp"
+        android:top="60dp"
+        android:bottom="30dp"
+        />
+
 </shape>

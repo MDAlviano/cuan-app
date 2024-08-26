@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/display_bg"
         android:layout_marginHorizontal="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:translationZ="70dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -118,10 +119,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/transaksi_bg"
-        android:orientation="vertical"
-        android:translationZ="999dp">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="189dp"
+                    android:layout_height="wrap_content"
+                    android:text="Transaksi Terkini"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Lebih detail"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/line_light"
+                android:layout_gravity="center"/>
 
 
+        </LinearLayout>
 
     </LinearLayout>
 
