@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color3"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".HomePageActivity">
-
+    tools:context=".HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTransactionBtn"
@@ -284,6 +283,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            app:tint="@color/white"
             android:background="@null"
             android:src="@drawable/baseline_settings_24"
             app:layout_constraintEnd_toEndOf="parent"
@@ -401,6 +401,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

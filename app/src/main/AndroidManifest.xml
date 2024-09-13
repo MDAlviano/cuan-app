@@ -13,6 +13,12 @@
         android:theme="@style/Theme.CuanBetaVersion"
         tools:targetApi="31">
         <activity
+            android:name=".SettingsPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FragmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".LaporanPageActivity"
             android:exported="false" />
         <activity

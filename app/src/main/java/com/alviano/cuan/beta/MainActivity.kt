@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 //            keperluanPenggunaan = homePage.findViewById(R.id.keperluanPenggunaan)
 //
 //            Toast.makeText(this, resources.getString(R.string.suksesMembuatToko), Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@MainActivity, HomePageActivity::class.java)
+            val intent = Intent(this@MainActivity, FragmentActivity::class.java)
             startActivity(intent)
 //            namaToko.text = resources.getString(R.string.namaToko, bookName)
 //            keperluanPenggunaan.text = resources.getString(R.string.keperluanPenggunaan, keperluanPengguna)
