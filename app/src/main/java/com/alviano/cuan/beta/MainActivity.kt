@@ -43,20 +43,20 @@ class MainActivity : AppCompatActivity() {
 
     fun toHomePage(v: View) {
         if (v.id == R.id.buttonToHomePage) {
-            val bookName = inputBookName.text.toString()
-            val keperluanPengguna = inputKeperluanPengguna.text.toString()
-
-            homePage = layoutInflater.inflate(R.layout.activity_home_page, null)
-            namaToko = homePage.findViewById(R.id.namaToko)
-            keperluanPenggunaan = homePage.findViewById(R.id.keperluanPenggunaan)
-
-            Toast.makeText(this, resources.getString(R.string.suksesMembuatToko), Toast.LENGTH_SHORT).show()
+//            val bookName = inputBookName.text.toString()
+//            val keperluanPengguna = inputKeperluanPengguna.text.toString()
+//
+//            homePage = layoutInflater.inflate(R.layout.activity_home_page, null)
+//            namaToko = homePage.findViewById(R.id.namaToko)
+//            keperluanPenggunaan = homePage.findViewById(R.id.keperluanPenggunaan)
+//
+//            Toast.makeText(this, resources.getString(R.string.suksesMembuatToko), Toast.LENGTH_SHORT).show()
             val intent = Intent(this@MainActivity, HomePageActivity::class.java)
             startActivity(intent)
-            namaToko.text = resources.getString(R.string.namaToko, bookName)
-            keperluanPenggunaan.text = resources.getString(R.string.keperluanPenggunaan, keperluanPengguna)
-            Log.i("namaNama", "nama toko = $bookName")
-            Log.i("namaNama", "keperluan = $keperluanPengguna")
+//            namaToko.text = resources.getString(R.string.namaToko, bookName)
+//            keperluanPenggunaan.text = resources.getString(R.string.keperluanPenggunaan, keperluanPengguna)
+//            Log.i("namaNama", "nama toko = $bookName")
+//            Log.i("namaNama", "keperluan = $keperluanPengguna")
 
 //            if (bookName.isEmpty() || keperluanPengguna.isEmpty()) {
 //                Toast.makeText(this, resources.getString(R.string.emptyInputField), Toast.LENGTH_SHORT).show()

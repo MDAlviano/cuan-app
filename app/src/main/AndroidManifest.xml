@@ -13,6 +13,15 @@
         android:theme="@style/Theme.CuanBetaVersion"
         tools:targetApi="31">
         <activity
+            android:name=".LaporanPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TransactionPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomePageActivity"
             android:exported="false" />
         <activity
@@ -26,8 +35,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>
