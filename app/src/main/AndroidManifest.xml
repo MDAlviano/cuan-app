@@ -25,15 +25,6 @@
             android:name=".FragmentActivity"
             android:exported="false" />
         <activity
-            android:name=".LaporanPageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProductPageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TransactionPageActivity"
-            android:exported="false" />
-        <activity
             android:name=".HomePageActivity"
             android:exported="false" />
         <activity
