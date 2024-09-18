@@ -74,7 +74,7 @@
             android:lineHeight="5dp"
             android:textColor="@color/color1"
             android:textSize="18sp"
-            android:hint="Pilih kategori"
+            android:hint="Contoh: Bisnis"
             android:textColorHint="@color/color7"
             />
 

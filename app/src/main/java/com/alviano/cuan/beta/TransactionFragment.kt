@@ -73,6 +73,10 @@ class TransactionFragment : Fragment() {
             activity?.startActivity(intent)
         }
 
+        binding.addTransactionBtn.setOnClickListener {
+            BottomSheetTransac().show(parentFragmentManager, "newTransactTag")
+        }
+
     }
 
 }

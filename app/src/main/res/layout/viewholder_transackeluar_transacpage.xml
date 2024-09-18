@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@drawable/bg_list_item"
@@ -11,7 +10,6 @@
     android:layout_marginRight="4dp"
     android:layout_marginBottom="10dp">
 
-
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="wrap_content"
@@ -20,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pemasukan" />
+        app:srcCompat="@drawable/pengeluaran" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -46,18 +44,19 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pemasukan"
+            android:text="Pengeluaran"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/imageView11"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.38" />
 
         <ImageView
             android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="5dp"
             app:layout_constraintBottom_toTopOf="@+id/textView21"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,10 +69,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rp10.000"
-            android:textColor="@color/color8"
+            android:textColor="@color/color4"
             android:textSize="19dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView11" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -82,9 +82,11 @@
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:background="@drawable/sprapatc8_bg"
+        android:backgroundTint="@color/color4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
