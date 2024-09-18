@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.alviano.cuan.beta.databinding.ActivityFragmentBinding
 
 class FragmentActivity : AppCompatActivity() {
@@ -22,7 +23,6 @@ class FragmentActivity : AppCompatActivity() {
 
         val mFragmentManager = supportFragmentManager
         val fragmentHome = HomeFragment()
-
         val fragment = mFragmentManager.findFragmentByTag(HomeFragment::class.java.simpleName)
 
         if (fragment !is HomeFragment) {

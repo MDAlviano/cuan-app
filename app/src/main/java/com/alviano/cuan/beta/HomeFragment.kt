@@ -1,14 +1,21 @@
 package com.alviano.cuan.beta
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.replace
 import com.alviano.cuan.beta.databinding.FragmentHomeBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class HomeFragment : Fragment() {
 
@@ -73,6 +80,10 @@ class HomeFragment : Fragment() {
         binding.toSettingsBtn.setOnClickListener {
             val intent = Intent(activity, SettingsPageActivity::class.java)
             activity?.startActivity(intent)
+        }
+
+        binding.addTransactionBtn.setOnClickListener {
+            BottomSheetTransac().show(parentFragmentManager, "transactTag")
         }
 
     }
