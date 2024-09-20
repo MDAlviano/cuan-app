@@ -205,19 +205,29 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="22dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <TextView
             android:id="@+id/lebihDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Lebih Detail"
             android:textColor="@color/black"
             android:textSize="10sp"
-            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.881"
             app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -227,11 +237,11 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
             android:text="Transaksi Terkini"
             android:textColor="@color/black"
             android:textSize="17dp"
             android:textStyle="bold"
-            android:layout_marginTop="22dp"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
@@ -301,27 +311,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <View
+            android:id="@+id/line1"
+            android:background="@color/gray"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:srcCompat="@drawable/line" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
-        <ImageView
+        <View
             android:id="@+id/imageView3"
-            android:layout_width="2dp"
-            android:layout_height="85dp"
+            android:layout_width="1dp"
+            android:layout_height="90dp"
+            android:background="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.625"
-            app:srcCompat="@drawable/line_vertical_dark" />
+            app:layout_constraintTop_toBottomOf="@+id/line1"
+            app:layout_constraintVertical_bias="1.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"

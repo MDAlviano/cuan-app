@@ -43,15 +43,33 @@
             android:layout_marginHorizontal="8dp"
             android:text="Total Pemasukan"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/totalPemasukan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:ems="10"
-            android:inputType="text" />
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp"
+                android:textColor="@color/color2"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:layout_marginStart="8dp"/>
+
+            <EditText
+                android:id="@+id/totalPemasukan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:ems="10"
+                android:inputType="number"/>
+
+    </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -74,6 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:text="Metode Pembayaran"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -106,8 +125,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:text="Keterangan"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp" />
+
 
         <EditText
             android:id="@+id/keteranganPemasukan"

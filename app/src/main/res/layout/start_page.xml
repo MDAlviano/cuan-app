@@ -42,7 +42,7 @@
     <Button
         android:id="@+id/buttonBottomSheet"
         android:layout_width="600px"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/color5"
         android:textSize="50px"

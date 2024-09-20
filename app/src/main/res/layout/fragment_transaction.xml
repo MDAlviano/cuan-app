@@ -103,12 +103,12 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
+            <View
                 android:id="@+id/imageView5"
-                android:layout_width="2dp"
+                android:background="@color/gray"
+                android:layout_width="1dp"
                 android:layout_height="85dp"
                 android:layout_marginBottom="19dp"
-                android:src="@drawable/line_vertical_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
                 app:layout_constraintStart_toEndOf="@+id/constraintLayout6" />
@@ -147,11 +147,11 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
+            <View
                 android:id="@+id/imageView4"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:src="@drawable/line"
+                android:layout_height="1dp"
+                android:background="@color/gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
