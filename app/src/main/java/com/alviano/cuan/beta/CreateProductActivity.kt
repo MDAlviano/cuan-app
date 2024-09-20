@@ -2,6 +2,8 @@ package com.alviano.cuan.beta
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,7 @@ import com.google.android.material.imageview.ShapeableImageView
 class CreateProductActivity : AppCompatActivity() {
 
     private lateinit var imageButton: ShapeableImageView
+    private lateinit var btnBack: ImageButton
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
@@ -23,9 +26,14 @@ class CreateProductActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_product)
 
         imageButton =findViewById(R.id.btnAddImg)
+        btnBack=findViewById(R.id.btnBack)
 
         imageButton.setOnClickListener{
             pickImageGallery()
+        }
+
+        btnBack.setOnClickListener {
+            finish()
         }
 
     }

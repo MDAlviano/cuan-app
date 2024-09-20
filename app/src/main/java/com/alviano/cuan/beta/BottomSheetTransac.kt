@@ -30,16 +30,6 @@ class BottomSheetTransac : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    // style for bottom_sheet_transac
-//    val dialog = Dialog(context)
-//    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//    dialog.setContentView(R.layout.bottom_sheet_transac)
-//    dialog.show()
-//    dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//    dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-//    dialog.window?.setGravity(Gravity.BOTTOM)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

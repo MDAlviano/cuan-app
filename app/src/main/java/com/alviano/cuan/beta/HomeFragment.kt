@@ -86,6 +86,17 @@ class HomeFragment : Fragment() {
             BottomSheetTransac().show(parentFragmentManager, "transactTag")
         }
 
+        binding.lebihDetail.setOnClickListener {
+            val transactionFragment = TransactionFragment()
+            val mFragmentManager = parentFragmentManager
+            mFragmentManager
+                .beginTransaction().apply {
+                    replace(R.id.fragment_container, transactionFragment, TransactionFragment::class.java.simpleName)
+                    addToBackStack(null)
+                    commit()
+                }
+        }
+
     }
 
 }
