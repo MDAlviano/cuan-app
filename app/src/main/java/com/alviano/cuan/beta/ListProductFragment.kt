@@ -93,6 +93,11 @@ class ListProductFragment : Fragment() {
             val intent = Intent(activity, SettingsPageActivity::class.java)
             activity?.startActivity(intent)
         }
+
+        binding.addProductBtn.setOnClickListener {
+            val intent = Intent(activity, CreateProductActivity::class.java)
+            activity?.startActivity(intent)
+        }
     }
 
 }

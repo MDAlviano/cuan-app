@@ -19,6 +19,9 @@
             android:name=".AddPemasukanActivity"
             android:exported="false" />
         <activity
+            android:name=".CreateProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingsPageActivity"
             android:exported="false" />
         <activity
