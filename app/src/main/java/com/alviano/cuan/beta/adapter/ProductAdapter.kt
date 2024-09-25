@@ -1,4 +1,4 @@
-package com.alviano.cuan.beta
+package com.alviano.cuan.beta.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.alviano.cuan.beta.R
+import com.alviano.cuan.beta.data.Product
 
 class ProductAdapter(private val productList: List<Product>) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dialog_transac_bg"
-    tools:context=".BottomSheetTransac">
+    tools:context=".fragment.BottomSheetTransac">
 
     <TextView
         android:id="@+id/chooseText"

@@ -1,38 +1,55 @@
-package com.alviano.cuan.beta
+package com.alviano.cuan.beta.fragment
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.replace
-import com.alviano.cuan.beta.databinding.FragmentHomeBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.alviano.cuan.beta.data.Product
+import com.alviano.cuan.beta.adapter.ProductAdapter
+import com.alviano.cuan.beta.R
+import com.alviano.cuan.beta.activity.SettingsPageActivity
+import com.alviano.cuan.beta.activity.TransactionFragment
+import com.alviano.cuan.beta.activity.CreateProductActivity
+import com.alviano.cuan.beta.databinding.FragmentListProductBinding
 
-class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+class ListProductFragment : Fragment() {
+
+    private lateinit var binding: FragmentListProductBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home, container, false)
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+//        return inflater.inflate(R.layout.fragment_list_product, container, false)
+        binding = FragmentListProductBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val data = ArrayList<Product>()
+
+//        for (i in 1..10) {
+//            data.add(Product(R.drawable.buku_tulis, "Item $i"))
+//        }
+
+        data.add(Product(R.drawable.pensil, "Pensil", 1200))
+        data.add(Product(R.drawable.spidol, "Spidol", 2000))
+        data.add(Product(R.drawable.buku_tulis, "Buku Tulis", 1500))
+
+        val adapter = ProductAdapter(data)
+        recyclerView.adapter = adapter
+
         binding.toHomeBtn.setOnClickListener {
             val homeFragment = HomeFragment()
             val mFragmentManager = parentFragmentManager
@@ -82,21 +99,10 @@ class HomeFragment : Fragment() {
             activity?.startActivity(intent)
         }
 
-        binding.addTransactionBtn.setOnClickListener {
-            BottomSheetTransac().show(parentFragmentManager, "transactTag")
+        binding.addProductBtn.setOnClickListener {
+            val intent = Intent(activity, CreateProductActivity::class.java)
+            activity?.startActivity(intent)
         }
-
-        binding.lebihDetail.setOnClickListener {
-            val transactionFragment = TransactionFragment()
-            val mFragmentManager = parentFragmentManager
-            mFragmentManager
-                .beginTransaction().apply {
-                    replace(R.id.fragment_container, transactionFragment, TransactionFragment::class.java.simpleName)
-                    addToBackStack(null)
-                    commit()
-                }
-        }
-
     }
 
 }

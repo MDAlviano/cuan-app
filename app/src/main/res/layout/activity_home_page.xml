@@ -8,7 +8,7 @@
     android:background="@color/color3"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".HomePageActivity">
+    tools:context=".activity.HomePageActivity">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

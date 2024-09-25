@@ -1,4 +1,4 @@
-package com.alviano.cuan.beta
+package com.alviano.cuan.beta.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,19 +6,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alviano.cuan.beta.databinding.FragmentTransactionBinding
+import com.alviano.cuan.beta.R
+import com.alviano.cuan.beta.activity.SettingsPageActivity
+import com.alviano.cuan.beta.activity.TransactionFragment
+import com.alviano.cuan.beta.databinding.FragmentHomeBinding
 
-class TransactionFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentTransactionBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_transaction, container, false)
-        binding = FragmentTransactionBinding.inflate(inflater, container, false)
+//        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -74,7 +77,18 @@ class TransactionFragment : Fragment() {
         }
 
         binding.addTransactionBtn.setOnClickListener {
-            BottomSheetTransac().show(parentFragmentManager, "newTransactTag")
+            BottomSheetTransac().show(parentFragmentManager, "transactTag")
+        }
+
+        binding.lebihDetail.setOnClickListener {
+            val transactionFragment = TransactionFragment()
+            val mFragmentManager = parentFragmentManager
+            mFragmentManager
+                .beginTransaction().apply {
+                    replace(R.id.fragment_container, transactionFragment, TransactionFragment::class.java.simpleName)
+                    addToBackStack(null)
+                    commit()
+                }
         }
 
     }

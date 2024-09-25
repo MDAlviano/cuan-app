@@ -1,16 +1,13 @@
-package com.alviano.cuan.beta
+package com.alviano.cuan.beta.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
+import com.alviano.cuan.beta.fragment.HomeFragment
+import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ActivityFragmentBinding
 
 class FragmentActivity : AppCompatActivity() {

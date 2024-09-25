@@ -1,14 +1,13 @@
-package com.alviano.cuan.beta
+package com.alviano.cuan.beta.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.alviano.cuan.beta.R
 import com.google.android.material.imageview.ShapeableImageView
 
 class CreateProductActivity : AppCompatActivity() {
@@ -49,6 +48,9 @@ class CreateProductActivity : AppCompatActivity() {
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             imageButton.setImageURI(data?.data)
             imageButton.scaleType = ImageView.ScaleType.CENTER_CROP
+            Toast.makeText(this, "Sukses menambahkan foto", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, "Gagal menambahkan foto", Toast.LENGTH_LONG).show()
         }
     }
 }
