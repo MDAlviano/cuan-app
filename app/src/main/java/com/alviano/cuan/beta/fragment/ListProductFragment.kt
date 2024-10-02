@@ -16,7 +16,6 @@ import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
 
-
 class ListProductFragment : Fragment() {
 
     private lateinit var binding: FragmentListProductBinding
