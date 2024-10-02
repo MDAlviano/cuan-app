@@ -39,10 +39,6 @@ class ListProductFragment : Fragment() {
 
         val data = ArrayList<Product>()
 
-//        for (i in 1..10) {
-//            data.add(Product(R.drawable.buku_tulis, "Item $i"))
-//        }
-
         data.add(Product(R.drawable.pensil, "Pensil", 1200))
         data.add(Product(R.drawable.spidol, "Spidol", 2000))
         data.add(Product(R.drawable.buku_tulis, "Buku Tulis", 1500))
