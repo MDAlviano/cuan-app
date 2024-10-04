@@ -24,6 +24,6 @@ class InsertProductAdapter(private val dataList: List<Product>) :
         val product = dataList[position]
         holder.binding.imageTxt.setImageResource(product.image)
         holder.binding.titleTxt.text = product.name
-        holder.binding.priceTxt.text = product.price.toString()
+        holder.binding.priceTxt.text = "Rp${product.price.toString()}"
     }
 }
