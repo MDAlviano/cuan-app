@@ -22,7 +22,6 @@ import com.alviano.cuan.beta.databinding.FragmentListProductBinding
 import com.alviano.cuan.beta.model.Product
 import com.alviano.cuan.beta.viewmodel.ProductViewModel
 
-
 class ListProductFragment : Fragment() {
 
     private lateinit var binding: FragmentListProductBinding
