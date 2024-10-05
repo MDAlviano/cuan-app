@@ -6,20 +6,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.alviano.cuan.beta.data.Product
-import com.alviano.cuan.beta.adapter.ProductAdapter
+//import com.alviano.cuan.beta.data.Product
+//import com.alviano.cuan.beta.adapter.ProductAdapter
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
+import com.alviano.cuan.beta.adapter.ProductAdapter
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
+import com.alviano.cuan.beta.model.Product
+import com.alviano.cuan.beta.viewmodel.ProductViewModel
 
 
 class ListProductFragment : Fragment() {
 
     private lateinit var binding: FragmentListProductBinding
+    private lateinit var mProductViewModel: ProductViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +41,19 @@ class ListProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = ProductAdapter()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val data = ArrayList<Product>()
+        mProductViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        mProductViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
+            adapter.setData(user)
+        })
 
-        data.add(Product(R.drawable.pensil, "Pensil", 1200))
-        data.add(Product(R.drawable.spidol, "Spidol", 2000))
-        data.add(Product(R.drawable.buku_tulis, "Buku Tulis", 1500))
-
-        val adapter = ProductAdapter(data)
-        recyclerView.adapter = adapter
+//        data.add(Product(R.drawable.pensil, "Pensil", 1200))
+//        data.add(Product(R.drawable.spidol, "Spidol", 2000))
+//        data.add(Product(R.drawable.buku_tulis, "Buku Tulis", 1500))
 
         binding.toHomeBtn.setOnClickListener {
             val homeFragment = HomeFragment()

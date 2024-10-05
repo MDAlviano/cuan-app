@@ -48,8 +48,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <LinearLayout
@@ -100,7 +101,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/form1"
+                android:id="@+id/namaProduk"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black" />
@@ -129,10 +130,10 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/form2"
+                android:id="@+id/hargaJual"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textColor="@color/black" />
 
         </LinearLayout>
@@ -160,20 +161,21 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/form3"
+                android:id="@+id/hargaBeli"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textColor="@color/black" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="200dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="76dp"
             android:backgroundTint="@color/color4"
             android:fontFamily="@font/inter_regular"
             android:paddingHorizontal="60dp"
@@ -183,8 +185,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

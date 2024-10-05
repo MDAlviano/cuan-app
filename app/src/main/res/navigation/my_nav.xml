@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav.xml"
+    app:startDestination="@id/listProductFragment">
+
+    <activity
+        android:id="@+id/createProductActivity"
+        android:name="com.alviano.cuan.beta.activity.CreateProductActivity"
+        android:label="activity_create_product"
+        tools:layout="@layout/activity_create_product" />
+    <fragment
+        android:id="@+id/listProductFragment"
+        android:name="com.alviano.cuan.beta.fragment.ListProductFragment"
+        android:label="fragment_list_product"
+        tools:layout="@layout/fragment_list_product" >
+        <action
+            android:id="@+id/action_listProductFragment_to_createProductActivity"
+            app:destination="@id/createProductActivity" />
+    </fragment>
+</navigation>

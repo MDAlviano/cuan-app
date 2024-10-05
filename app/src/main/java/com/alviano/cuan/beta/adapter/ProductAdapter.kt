@@ -1,5 +1,6 @@
 package com.alviano.cuan.beta.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,32 +8,41 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alviano.cuan.beta.R
-import com.alviano.cuan.beta.data.Product
+import com.alviano.cuan.beta.databinding.ProductCardBinding
+import com.alviano.cuan.beta.model.Product
 
-class ProductAdapter(private val productList: List<Product>) :
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
-    class ProductViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView){
-        val productImageView: ImageView = itemView.findViewById(R.id.productImage)
-        val productNameView: TextView = itemView.findViewById(R.id.productName)
-        val productPriceView: TextView = itemView.findViewById(R.id.productPrice)
-    }
+    private var productList = emptyList<Product>()
+    private lateinit var context: Context
+
+    class ProductViewHolder(val binding: ProductCardBinding) :
+        RecyclerView.ViewHolder(binding.root){}
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList[position]
-        holder.productImageView.setImageResource(product.image)
-        holder.productNameView.text = product.name
-        holder.productPriceView.text = "Rp${product.price}"
+//        holder.productImageView.setImageResource(product.image)
+        holder.binding.productName.text = product.name
+        holder.binding.productPrice.text = "Rp${product.sellPrice}"
+
+//        holder.binding.productCard.setOnClickListener{
+//            val action = listFra
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.product_card, parent, false)
-        return ProductViewHolder(view)
+        context = parent.context
+        val binding = ProductCardBinding.inflate(LayoutInflater.from(context), parent, false)
+        return ProductViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return productList.size
+    }
+
+    fun setData(product: List<Product>){
+        this.productList = product
+        notifyDataSetChanged()
     }
 
 }
