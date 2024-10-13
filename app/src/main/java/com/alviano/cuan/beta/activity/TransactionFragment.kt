@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.FragmentTransactionBinding
 import com.alviano.cuan.beta.fragment.BottomSheetTransac
-import com.alviano.cuan.beta.fragment.HomeFragment
-import com.alviano.cuan.beta.fragment.ListProductFragment
+import com.alviano.cuan.beta.fragment.home.HomeFragment
+import com.alviano.cuan.beta.fragment.products.ListProductFragment
 import com.alviano.cuan.beta.fragment.ReportFragment
 
 class TransactionFragment : Fragment() {

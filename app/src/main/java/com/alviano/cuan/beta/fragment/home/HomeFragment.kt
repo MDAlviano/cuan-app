@@ -1,4 +1,4 @@
-package com.alviano.cuan.beta.fragment
+package com.alviano.cuan.beta.fragment.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,9 @@ import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.databinding.FragmentHomeBinding
+import com.alviano.cuan.beta.fragment.BottomSheetTransac
+import com.alviano.cuan.beta.fragment.products.ListProductFragment
+import com.alviano.cuan.beta.fragment.ReportFragment
 
 class HomeFragment : Fragment() {
 

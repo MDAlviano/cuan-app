@@ -1,4 +1,4 @@
-package com.alviano.cuan.beta.fragment
+package com.alviano.cuan.beta.fragment.products
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,17 +9,16 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 //import com.alviano.cuan.beta.data.Product
-//import com.alviano.cuan.beta.adapter.ProductAdapter
+//import com.alviano.cuan.beta.fragment.products.ProductAdapter
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
-import com.alviano.cuan.beta.adapter.ProductAdapter
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
-import com.alviano.cuan.beta.model.Product
+import com.alviano.cuan.beta.fragment.ReportFragment
+import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.viewmodel.ProductViewModel
 
 class ListProductFragment : Fragment() {

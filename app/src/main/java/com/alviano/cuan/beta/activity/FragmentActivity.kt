@@ -6,7 +6,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.alviano.cuan.beta.fragment.HomeFragment
+import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ActivityFragmentBinding
 

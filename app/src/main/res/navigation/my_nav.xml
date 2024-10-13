@@ -12,7 +12,7 @@
         tools:layout="@layout/activity_create_product" />
     <fragment
         android:id="@+id/listProductFragment"
-        android:name="com.alviano.cuan.beta.fragment.ListProductFragment"
+        android:name="com.alviano.cuan.beta.fragment.products.ListProductFragment"
         android:label="fragment_list_product"
         tools:layout="@layout/fragment_list_product" >
         <action

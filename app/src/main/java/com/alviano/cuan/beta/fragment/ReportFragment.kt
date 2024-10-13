@@ -10,6 +10,8 @@ import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.databinding.FragmentReportBinding
+import com.alviano.cuan.beta.fragment.home.HomeFragment
+import com.alviano.cuan.beta.fragment.products.ListProductFragment
 
 class ReportFragment : Fragment() {
 

@@ -2,22 +2,22 @@ package com.alviano.cuan.beta.repository
 
 import androidx.lifecycle.LiveData
 import com.alviano.cuan.beta.data.ProductDao
-import com.alviano.cuan.beta.model.Product
+import com.alviano.cuan.beta.model.ProductModel
 
 class ProductRepository(private val productDao: ProductDao) {
 
-    val readAllData: LiveData<List<Product>> = productDao.readALlData()
+    val readAllData: LiveData<List<ProductModel>> = productDao.readALlData()
 
-    suspend fun addProduct(product: Product) {
-        productDao.addProduct(product)
+    suspend fun addProduct(productModel: ProductModel) {
+        productDao.addProduct(productModel)
     }
 
-    suspend fun updateProduct(product: Product) {
-        productDao.updateProduct(product)
+    suspend fun updateProduct(productModel: ProductModel) {
+        productDao.updateProduct(productModel)
     }
 
-    suspend fun deleteProduct(product: Product) {
-        productDao.deleteProduct(product)
+    suspend fun deleteProduct(productModel: ProductModel) {
+        productDao.deleteProduct(productModel)
     }
 
 //    suspend fun deleteAllProducts() {
