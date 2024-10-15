@@ -7,24 +7,24 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.alviano.cuan.beta.model.Product
+import com.alviano.cuan.beta.model.ProductModel
 
 @Dao
 interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addProduct(product: Product)
+    suspend fun addProduct(productModel: ProductModel)
 
     @Update
-    suspend fun updateProduct(product: Product)
+    suspend fun updateProduct(productModel: ProductModel)
 
     @Delete
-    suspend fun deleteProduct(product: Product)
+    suspend fun deleteProduct(productModel: ProductModel)
 
     @Query("DELETE FROM product_table")
     suspend fun deleteAllProducts()
 
-    @Query("SELECT * FROM product_table ORDER BY id DESC")
-    fun readALlData(): LiveData<List<Product>>
+    @Query("SELECT * FROM product_table ORDER BY productId DESC")
+    fun readALlData(): LiveData<List<ProductModel>>
 
 }

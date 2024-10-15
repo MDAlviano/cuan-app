@@ -3,10 +3,10 @@ package com.alviano.cuan.beta.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.alviano.cuan.beta.model.ProductModel
 import com.alviano.cuan.beta.databinding.ViewholderProductBinding
-import com.alviano.cuan.beta.model.Product
 
-class InsertProductAdapter(private val dataList: List<Product>) :
+class InsertProductAdapter(private val dataList: List<ProductModel>) :
     RecyclerView.Adapter<InsertProductAdapter.MyViewHolder>() {
 
     class MyViewHolder(val binding: ViewholderProductBinding) :
