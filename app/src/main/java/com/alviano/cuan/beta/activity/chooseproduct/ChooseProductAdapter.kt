@@ -5,22 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ViewholderProductBinding
-import com.alviano.cuan.beta.model.Product
+import com.alviano.cuan.beta.model.ProductModel
 
 class ChooseProductAdapter(private val context: Context) : BaseAdapter() {
 
-    private var productList = emptyList<Product>()
+    private var productList = emptyList<ProductModel>()
 
     override fun getCount(): Int {
         return productList.size
     }
 
-    override fun getItem(position: Int): Product {
+    override fun getItem(position: Int): ProductModel {
         return productList[position]
     }
 
@@ -51,7 +48,7 @@ class ChooseProductAdapter(private val context: Context) : BaseAdapter() {
         return view
     }
 
-    fun setData(product: List<Product>) {
+    fun setData(product: List<ProductModel>) {
         this.productList = product
         notifyDataSetChanged()
     }

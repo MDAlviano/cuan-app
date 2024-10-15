@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
+import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.databinding.FragmentHomeBinding
 import com.alviano.cuan.beta.fragment.BottomSheetTransac
 import com.alviano.cuan.beta.fragment.products.ListProductFragment

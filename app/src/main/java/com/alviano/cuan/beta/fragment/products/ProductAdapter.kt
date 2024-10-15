@@ -10,7 +10,7 @@ import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ProductCardBinding
 import com.alviano.cuan.beta.model.ProductModel
 
-class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val onItemClick: (ProductModel) -> Unit): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private var productModelList = emptyList<ProductModel>()
     private lateinit var context: Context
@@ -35,6 +35,10 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
         holder.binding.productName.text = product.name
         holder.binding.productPrice.text = "Rp${product.sellPrice}"
+
+        holder.itemView.setOnClickListener {
+            onItemClick(product)
+        }
 
     }
 
