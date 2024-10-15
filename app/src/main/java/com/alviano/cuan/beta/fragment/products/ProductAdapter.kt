@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ProductCardBinding
@@ -26,6 +27,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
             // Converts ByteArray to Bitmap
             val bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
             holder.binding.productImage.setImageBitmap(bitmap)
+            holder.binding.productImage.scaleType = ImageView.ScaleType.CENTER_CROP
         } else {
             // Handles if there's no image data
             holder.binding.productImage.setImageResource(R.drawable.image_placeholder)

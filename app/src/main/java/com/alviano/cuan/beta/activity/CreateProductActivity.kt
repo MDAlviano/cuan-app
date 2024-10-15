@@ -2,6 +2,7 @@ package com.alviano.cuan.beta.activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Bundle
@@ -76,7 +77,7 @@ class CreateProductActivity : AppCompatActivity() {
         val imageUri: Uri? = data?.data
         val source = imageUri?.let { ImageDecoder.createSource(this.contentResolver, it) }
         val imageBitmap = source?.let { ImageDecoder.decodeBitmap(it) }
-        Log.d("imageDataBitmap", imageBitmap.toString())
+//        Log.d("imageDataBitmap", imageBitmap.toString())
 
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             imageButton.setImageBitmap(imageBitmap)
@@ -94,10 +95,14 @@ class CreateProductActivity : AppCompatActivity() {
         Log.i("imageButtonBitmap", imageButtonBitmap.toString())
 
         // Convert imageBitmap to ByteArray
-        val outputStream = ByteArrayOutputStream()
-        imageButtonBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
-        val productImage = outputStream.toByteArray()
-        Log.i("imageDataByteArray", productImage.toString())
+        val productImage: ByteArray? = if (imageButtonBitmap === imageButton.drawable.toBitmap()) {
+            val outputStream = ByteArrayOutputStream()
+            imageButtonBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+            outputStream.toByteArray()
+        } else {
+            null
+        }
+//        Log.i("imageDataByteArray", productImage.toString())
 
         val productName = addNamaProduk.text.toString()
         val sellPrice = addHargaJual.text.toString()
