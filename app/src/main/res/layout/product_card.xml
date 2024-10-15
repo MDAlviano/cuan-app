@@ -13,6 +13,7 @@
         android:layout_marginTop="10dp"
         android:padding="1dp"
         android:background="@drawable/rounded_corner"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
-        app:cardElevation="0dp"
+        app:cardElevation="3dp"
         app:cardBackgroundColor="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,6 +71,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

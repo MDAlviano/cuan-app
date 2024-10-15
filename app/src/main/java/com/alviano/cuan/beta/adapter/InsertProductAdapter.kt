@@ -3,8 +3,8 @@ package com.alviano.cuan.beta.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.alviano.cuan.beta.data.Product
 import com.alviano.cuan.beta.databinding.ViewholderProductBinding
+import com.alviano.cuan.beta.model.Product
 
 class InsertProductAdapter(private val dataList: List<Product>) :
     RecyclerView.Adapter<InsertProductAdapter.MyViewHolder>() {
@@ -22,8 +22,8 @@ class InsertProductAdapter(private val dataList: List<Product>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val product = dataList[position]
-        holder.binding.imageTxt.setImageResource(product.image)
+//        holder.binding.imageTxt.setImageResource(product.image)
         holder.binding.titleTxt.text = product.name
-        holder.binding.priceTxt.text = "Rp${product.price.toString()}"
+        holder.binding.priceTxt.text = "Rp${product.sellPrice.toString()}"
     }
 }

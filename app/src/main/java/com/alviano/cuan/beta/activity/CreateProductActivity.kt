@@ -121,6 +121,7 @@ class CreateProductActivity : AppCompatActivity() {
             // Add data to database
             mViewModel.addProduct(product)
             Toast.makeText(this, "Produk telah ditambahkan.", Toast.LENGTH_LONG).show()
+            finish()
             // Navigate back
 //            findNavController().navigate(R.id.)
         } else {

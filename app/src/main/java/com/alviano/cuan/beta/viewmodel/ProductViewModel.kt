@@ -28,6 +28,12 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
+    fun updateProduct(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateProduct(product)
+        }
+    }
+
     fun deleteProduct(product: Product) {
         viewModelScope.launch(Dispatchers.IO){
             repository.deleteProduct(product)

@@ -1,4 +1,4 @@
-package com.alviano.cuan.beta.activity
+package com.alviano.cuan.beta.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alviano.cuan.beta.R
+import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.databinding.FragmentTransactionBinding
-import com.alviano.cuan.beta.fragment.BottomSheetTransac
-import com.alviano.cuan.beta.fragment.HomeFragment
-import com.alviano.cuan.beta.fragment.ListProductFragment
-import com.alviano.cuan.beta.fragment.ReportFragment
 
 class TransactionFragment : Fragment() {
 
@@ -82,6 +79,11 @@ class TransactionFragment : Fragment() {
             BottomSheetTransac().show(parentFragmentManager, "newTransactTag")
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.finish()
     }
 
 }

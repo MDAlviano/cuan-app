@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
-import com.alviano.cuan.beta.activity.TransactionFragment
 import com.alviano.cuan.beta.databinding.FragmentReportBinding
 
 class ReportFragment : Fragment() {
@@ -76,5 +75,10 @@ class ReportFragment : Fragment() {
             val intent = Intent(activity, SettingsPageActivity::class.java)
             activity?.startActivity(intent)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.finish()
     }
 }

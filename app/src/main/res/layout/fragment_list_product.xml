@@ -67,12 +67,12 @@
             android:clickable="true"
             android:focusable="true"
             android:tint="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView2"
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color3"
@@ -244,7 +244,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
