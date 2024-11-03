@@ -89,7 +89,8 @@
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:text="Buat"
-        android:textColor="@color/color2"
-        android:backgroundTint="@color/color5"/>
+        android:textStyle="bold"
+        android:textColor="@color/color3"
+        android:backgroundTint="@color/color1"/>
 
 </LinearLayout>

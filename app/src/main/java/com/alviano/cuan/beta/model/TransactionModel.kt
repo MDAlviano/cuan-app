@@ -10,6 +10,6 @@ import kotlinx.parcelize.Parcelize
 data class TransactionModel(
     @PrimaryKey(autoGenerate = true) val transactionId: Int,
     val totalAmount: Int,
-    val transactionType: String,
+//    val transactionType: String,
     val description: String,
 ) : Parcelable

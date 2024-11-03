@@ -59,14 +59,14 @@
             android:id="@+id/imageView11"
             android:layout_width="wrap_content"
             android:layout_height="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView21"
+            app:layout_constraintBottom_toTopOf="@+id/totalPemasukan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView20"
             app:srcCompat="@drawable/line" />
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/totalPemasukan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rp10.000"

@@ -48,6 +48,7 @@ class CreateProductActivity : AppCompatActivity() {
         addHargaBeli = findViewById(R.id.hargaBeli)
         addHargaJual = findViewById(R.id.hargaJual)
         saveButton = findViewById(R.id.saveBtn)
+        Log.i("hargaBeli", addHargaBeli.toString())
 
         saveButton.setOnClickListener{
             insertDataToDatabase()
@@ -113,11 +114,11 @@ class CreateProductActivity : AppCompatActivity() {
             val productModel = ProductModel(0, productImage, productName, sellPrice.toInt(), buyPrice.toInt())
             // Add data to database
             mViewModel.addProduct(productModel)
-            Toast.makeText(this, "Produk telah ditambahkan.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Produk telah ditambahkan.", Toast.LENGTH_SHORT).show()
             // Finish activity after done adding data
             finish()
         } else {
-            Toast.makeText(this, "Harap isi semua kolom.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Harap isi semua kolom.", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
-import com.alviano.cuan.beta.activity.TransactionFragment
+import com.alviano.cuan.beta.fragment.transaction.TransactionFragment
 import com.alviano.cuan.beta.databinding.FragmentReportBinding
 import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.fragment.products.ListProductFragment
@@ -74,9 +74,9 @@ class ReportFragment : Fragment() {
                 }
         }
 
-        binding.toSettingsBtn.setOnClickListener {
-            val intent = Intent(activity, SettingsPageActivity::class.java)
-            activity?.startActivity(intent)
-        }
+//        binding.toSettingsBtn.setOnClickListener {
+//            val intent = Intent(activity, SettingsPageActivity::class.java)
+//            activity?.startActivity(intent)
+//        }
     }
 }

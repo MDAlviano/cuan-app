@@ -16,7 +16,7 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     private val repository: ProductRepository
 
     init {
-        val productDao = MainDatabase.getProductDatabase(application).productDao()
+        val productDao = MainDatabase.getMainDatabase(application).productDao()
         repository = ProductRepository(productDao)
         readAllData = repository.readAllData
     }

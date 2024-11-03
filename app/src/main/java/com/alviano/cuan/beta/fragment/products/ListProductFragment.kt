@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 //import com.alviano.cuan.beta.fragment.products.ProductAdapter
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
-import com.alviano.cuan.beta.activity.TransactionFragment
+import com.alviano.cuan.beta.fragment.transaction.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
 import com.alviano.cuan.beta.fragment.ReportFragment
@@ -97,10 +97,10 @@ class ListProductFragment : Fragment() {
                 }
         }
 
-        binding.toSettingsBtn.setOnClickListener {
-            val intent = Intent(activity, SettingsPageActivity::class.java)
-            activity?.startActivity(intent)
-        }
+//        binding.toSettingsBtn.setOnClickListener {
+//            val intent = Intent(activity, SettingsPageActivity::class.java)
+//            activity?.startActivity(intent)
+//        }
 
         binding.addProductBtn.setOnClickListener {
             val intent = Intent(activity, CreateProductActivity::class.java)
