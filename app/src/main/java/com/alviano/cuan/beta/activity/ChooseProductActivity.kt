@@ -15,9 +15,9 @@ class ChooseProductActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityChooseProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val recyclerView = binding.allProduct
-        recyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        val recyclerView = binding.allProduct
+//        recyclerView.layoutManager = LinearLayoutManager(this)
 
 //        val data = ArrayList<Product>()
 

@@ -2,7 +2,6 @@ package com.alviano.cuan.beta.fragment.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +39,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = TransactionAdapter()
-        Log.i("adapterHome", print(adapter).toString())
+//        Log.i("adapterHome", print(adapter).toString())
         val recentRecyclerView = view.findViewById<RecyclerView>(R.id.recentTransactionRecyclerView)
         recentRecyclerView.adapter = adapter
         recentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -114,6 +113,11 @@ class HomeFragment : Fragment() {
                 }
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.finish()
     }
 
 }

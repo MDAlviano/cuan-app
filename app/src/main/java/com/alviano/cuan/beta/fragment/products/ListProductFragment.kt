@@ -16,6 +16,7 @@ import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.fragment.transaction.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
+import com.alviano.cuan.beta.activity.update.UpdateProductActivty
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
 import com.alviano.cuan.beta.fragment.ReportFragment
 import com.alviano.cuan.beta.fragment.home.HomeFragment
@@ -39,7 +40,11 @@ class ListProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ProductAdapter()
+        val adapter = ProductAdapter { selectedProduct ->
+            val intent = Intent(activity, UpdateProductActivty::class.java)
+            intent.putExtra("selected_product", selectedProduct) // Kirim data produk
+            activity?.startActivity(intent)
+        }
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

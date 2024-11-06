@@ -79,4 +79,9 @@ class ReportFragment : Fragment() {
 //            activity?.startActivity(intent)
 //        }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.finish()
+    }
 }

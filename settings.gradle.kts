@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Cuan (Beta Version)"
+rootProject.name = "Cuan-App"
 include(":app")
  
