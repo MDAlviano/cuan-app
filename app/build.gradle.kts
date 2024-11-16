@@ -62,9 +62,10 @@ dependencies {
 //    implementation("androidx.navigation:navigation-fragment-ktx:2.2.0")
 
     // Lifecycle Components
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
 
     // Room Db
     val room_version = "2.5.0"

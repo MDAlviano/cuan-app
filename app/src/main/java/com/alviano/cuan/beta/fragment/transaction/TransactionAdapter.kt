@@ -3,9 +3,13 @@ package com.alviano.cuan.beta.fragment.transaction
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.alviano.cuan.beta.R
+import com.alviano.cuan.beta.data.TransactionType
 import com.alviano.cuan.beta.databinding.ViewholderTransacmasukTransacpageBinding
 import com.alviano.cuan.beta.model.TransactionModel
+import com.alviano.cuan.beta.utils.formatAsCurrency
 
 class TransactionAdapter:RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
@@ -27,14 +31,29 @@ class TransactionAdapter:RecyclerView.Adapter<TransactionAdapter.TransactionView
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactionModelList[position]
+        val totalAmount = transaction.totalAmount
+        val formattedTotalAmount = formatAsCurrency(totalAmount)
 
-        holder.binding.totalPemasukan.text = "Rp${transaction.totalAmount}"
+        holder.binding.totalPemasukan.text = formattedTotalAmount
+        if (transaction.transactionType == TransactionType.MASUK){
+            holder.binding.jenisTransaksi.text = "Pemasukan"
+//            holder.binding.jenisTransaksi.setTextColor(ContextCompat.getColor(context, R.color.color8))
+            holder.binding.totalPemasukan.setTextColor(ContextCompat.getColor(context, R.color.color8))
+            holder.binding.transacTypeImage.setImageResource(R.drawable.pemasukan)
+            holder.binding.background.setBackgroundResource(R.drawable.sprapatc8_bg)
+        } else {
+            holder.binding.jenisTransaksi.text = "Pengeluaran"
+//            holder.binding.jenisTransaksi.setTextColor(ContextCompat.getColor(context, R.color.color4))
+            holder.binding.totalPemasukan.setTextColor(ContextCompat.getColor(context, R.color.color4))
+            holder.binding.transacTypeImage.setImageResource(R.drawable.pengeluaran)
+            holder.binding.background.setBackgroundResource(R.drawable.sprapatc4_bg)
+        }
     }
 
     fun setData(transactionModel: List<TransactionModel>) {
         val oldSize = transactionModelList.size
         transactionModelList.clear() // Clear existing data
         transactionModelList.addAll(transactionModel) // Add new data
-        notifyItemRangeInserted(oldSize, transactionModel.size) // Notify about inserted items
+        notifyDataSetChanged() // Notify about inserted items
     }
 }

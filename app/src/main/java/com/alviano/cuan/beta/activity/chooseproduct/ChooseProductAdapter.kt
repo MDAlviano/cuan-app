@@ -1,10 +1,12 @@
 package com.alviano.cuan.beta.activity.chooseproduct
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ViewholderProductBinding
 import com.alviano.cuan.beta.model.ProductModel
@@ -38,12 +40,18 @@ class ChooseProductAdapter(private val context: Context) : BaseAdapter() {
             view = convertView
         }
 
+
         // Bind data to views
         val product = getItem(position)
+        val imageByteArray = product.image
+
         binding.titleTxt.text = product.name
         binding.priceTxt.text = "Rp${product.sellPrice}"
-        // Uncomment and load the image if available
-         binding.imageTxt.setImageResource(R.drawable.buku_tulis)
+
+        // Converts ByteArray to Bitmap
+        val bitmap = imageByteArray?.let { BitmapFactory.decodeByteArray(imageByteArray, 0, it.size) }
+        binding.imageTxt.setImageBitmap(bitmap)
+        binding.imageTxt.scaleType = ImageView.ScaleType.CENTER_CROP
 
         return view
     }

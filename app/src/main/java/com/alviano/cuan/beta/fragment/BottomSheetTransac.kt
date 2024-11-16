@@ -34,6 +34,7 @@ class BottomSheetTransac : BottomSheetDialogFragment() {
         binding.toPemasukan.setOnClickListener {
             val intent = Intent(activity, AddPemasukanActivity::class.java)
             activity?.startActivity(intent)
+
         }
 
         binding.toPengeluaran.setOnClickListener {

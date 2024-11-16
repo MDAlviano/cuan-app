@@ -98,7 +98,7 @@ class CreateProductActivity : AppCompatActivity() {
         // Convert imageBitmap to ByteArray
         val productImage: ByteArray? = if (imageButtonBitmap === imageButton.drawable.toBitmap()) {
             val outputStream = ByteArrayOutputStream()
-            imageButtonBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+            imageButtonBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
             outputStream.toByteArray()
         } else {
             null

@@ -1,29 +1,31 @@
 package com.alviano.cuan.beta.fragment.transaction
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alviano.cuan.beta.R
-import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.databinding.FragmentTransactionBinding
 import com.alviano.cuan.beta.fragment.BottomSheetTransac
 import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.fragment.products.ListProductFragment
 import com.alviano.cuan.beta.fragment.ReportFragment
+import com.alviano.cuan.beta.utils.formatAsCurrency
 import com.alviano.cuan.beta.viewmodel.TransactionViewModel
 
 class TransactionFragment : Fragment() {
 
     private lateinit var binding: FragmentTransactionBinding
     private lateinit var transactionViewModel: TransactionViewModel
+    private lateinit var pemasukanTextView: TextView
+    private lateinit var pengeluaranTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +46,25 @@ class TransactionFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        pemasukanTextView = binding.totalPemasukanTextView
+        pengeluaranTextView = binding.totalPengeluaranTextView
+
         transactionViewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
         transactionViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
             adapter.setData(user)
         })
+
+
+
+        transactionViewModel.totalPemasukan.observe(viewLifecycleOwner) { total ->
+            val formattedTotal = formatAsCurrency(total)
+            pemasukanTextView.text = formattedTotal
+        }
+
+        transactionViewModel.totalPengeluaran.observe(viewLifecycleOwner) { total ->
+            val formattedTotal = formatAsCurrency(total)
+            pengeluaranTextView.text = formattedTotal
+        }
 
         binding.toHomeBtn.setOnClickListener {
             val homeFragment = HomeFragment()

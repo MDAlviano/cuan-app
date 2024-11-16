@@ -3,6 +3,7 @@ package com.alviano.cuan.beta.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.alviano.cuan.beta.data.TransactionType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -10,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class TransactionModel(
     @PrimaryKey(autoGenerate = true) val transactionId: Int,
     val totalAmount: Int,
-//    val transactionType: String,
+    val transactionType: TransactionType,
     val description: String,
+    val date: Long,
 ) : Parcelable
