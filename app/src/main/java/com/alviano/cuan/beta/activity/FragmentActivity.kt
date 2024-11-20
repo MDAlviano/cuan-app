@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ActivityFragmentBinding
@@ -14,6 +17,7 @@ class FragmentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFragmentBinding
     private var doubleBackToExitPressedOnce = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +37,25 @@ class FragmentActivity : AppCompatActivity() {
                 .add(R.id.fragment_container, fragmentHome, HomeFragment::class.java.simpleName)
                 .commit()
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce) {
+                    finish() // Menghancurkan aplikasi
+                } else {
+                    doubleBackToExitPressedOnce = true
+                    Toast.makeText(applicationContext, "Tekan tombol kembali sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        doubleBackToExitPressedOnce = false
+                    }, 2000)
+                }
+            }
+        })
+
     }
 
     // blom bener
-    override fun onBackPressed() {
 
-        if (doubleBackToExitPressedOnce){
-            super.onBackPressed()
-            return
-        }
-
-        this.doubleBackToExitPressedOnce = true
-        Toast.makeText(this, "Tekan tombol kembali sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
-
-        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
-    }
 
 }

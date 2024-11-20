@@ -1,4 +1,4 @@
-package com.alviano.cuan.beta.fragment.transaction
+package com.alviano.cuan.beta.fragment.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.data.TransactionType
+import com.alviano.cuan.beta.databinding.VieholderTransactionHomepageBinding
 import com.alviano.cuan.beta.databinding.ViewholderTransacmasukTransacpageBinding
 import com.alviano.cuan.beta.model.TransactionModel
 import com.alviano.cuan.beta.utils.formatAsCurrency
@@ -14,48 +15,42 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class TransactionAdapter:RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
+class HomeTransactionAdapter:RecyclerView.Adapter<HomeTransactionAdapter.HomeTransactionViewHolder>() {
 
     private var transactionModelList = mutableListOf<TransactionModel>()
     private lateinit var context: Context
 
-    class TransactionViewHolder(val binding: ViewholderTransacmasukTransacpageBinding) :
-            RecyclerView.ViewHolder(binding.root){}
+    class HomeTransactionViewHolder(val binding: VieholderTransactionHomepageBinding) :
+            RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTransactionViewHolder {
         context = parent.context
-        val binding = ViewholderTransacmasukTransacpageBinding.inflate(LayoutInflater.from(context), parent, false)
-        return TransactionViewHolder(binding)
+        val binding = VieholderTransactionHomepageBinding.inflate(LayoutInflater.from(context), parent, false)
+        return HomeTransactionViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return transactionModelList.size
     }
 
-    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeTransactionViewHolder, position: Int) {
         val transaction = transactionModelList[position]
         val totalAmount = transaction.totalAmount
         val formattedTotalAmount = formatAsCurrency(totalAmount)
         val date = formatDate(transaction.timestamp)
         val time = formatTime(transaction.timestamp)
 
-        holder.binding.totalPemasukan.text = formattedTotalAmount
+        holder.binding.totalTransaksi.text = formattedTotalAmount
+        holder.binding.waktuHome.text = time
+
         if (transaction.transactionType == TransactionType.MASUK){
             holder.binding.jenisTransaksi.text = "Pemasukan"
-//            holder.binding.jenisTransaksi.setTextColor(ContextCompat.getColor(context, R.color.color8))
-            holder.binding.totalPemasukan.setTextColor(ContextCompat.getColor(context, R.color.color8))
-            holder.binding.transacTypeImage.setImageResource(R.drawable.pemasukan)
-            holder.binding.background.setBackgroundResource(R.drawable.sprapatc8_bg)
-            holder.binding.date.text = date
-            holder.binding.time.text = time
+            holder.binding.totalTransaksi.setTextColor(ContextCompat.getColor(context, R.color.color8))
+            holder.binding.imageViewHome.setImageResource(R.drawable.pemasukan)
         } else {
             holder.binding.jenisTransaksi.text = "Pengeluaran"
-//            holder.binding.jenisTransaksi.setTextColor(ContextCompat.getColor(context, R.color.color4))
-            holder.binding.totalPemasukan.setTextColor(ContextCompat.getColor(context, R.color.color4))
-            holder.binding.transacTypeImage.setImageResource(R.drawable.pengeluaran)
-            holder.binding.background.setBackgroundResource(R.drawable.sprapatc4_bg)
-            holder.binding.date.text = date
-            holder.binding.time.text = time
+            holder.binding.totalTransaksi.setTextColor(ContextCompat.getColor(context, R.color.color4))
+            holder.binding.imageViewHome.setImageResource(R.drawable.pengeluaran)
         }
     }
 

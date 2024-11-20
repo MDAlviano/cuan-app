@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 //import com.alviano.cuan.beta.data.Product
 //import com.alviano.cuan.beta.fragment.products.ProductAdapter
 import com.alviano.cuan.beta.R
-import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.fragment.transaction.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
 import com.alviano.cuan.beta.activity.update.UpdateProductActivty
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
-import com.alviano.cuan.beta.fragment.ReportFragment
+import com.alviano.cuan.beta.fragment.report.ReportFragment
 import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.viewmodel.ProductViewModel
 

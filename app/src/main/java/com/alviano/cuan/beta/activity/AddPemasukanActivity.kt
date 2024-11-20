@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alviano.cuan.beta.R
+import com.alviano.cuan.beta.activity.chooseproduct.ChooseProductActivity
 import com.alviano.cuan.beta.activity.chooseproduct.ChooseProductAdapter
 import com.alviano.cuan.beta.data.TransactionType
 import com.alviano.cuan.beta.databinding.ActivityAddPemasukanBinding
-import com.alviano.cuan.beta.viewmodel.ProductViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.alviano.cuan.beta.model.TransactionModel
+import com.alviano.cuan.beta.viewmodel.ProductViewModel
 import com.alviano.cuan.beta.viewmodel.TransactionViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -28,7 +29,6 @@ class AddPemasukanActivity : AppCompatActivity() {
     private lateinit var myViewModel: TransactionViewModel
     private lateinit var totalAmount: EditText
     private lateinit var description: EditText
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +47,12 @@ class AddPemasukanActivity : AppCompatActivity() {
         totalAmount = findViewById(R.id.totalPemasukan)
         description = findViewById(R.id.keteranganPemasukan)
 
-        binding.saveTransacPemasukan.setOnClickListener{
+        binding.saveTransacPemasukan.setOnClickListener {
             addDataToDatabase()
+        }
+
+        binding.insertProduct.setOnClickListener{
+            ChooseProductActivity().show(supportFragmentManager, "ChooseProductTag")
         }
     }
 
@@ -77,7 +81,6 @@ class AddPemasukanActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-
     fun addDataToDatabase() {
         val totalPemasukan = totalAmount.text.toString()
         val tipeTransaksi = TransactionType.MASUK
@@ -90,16 +93,18 @@ class AddPemasukanActivity : AppCompatActivity() {
         Log.i("tanggal 2", tanggal2)
 
         // Input check
-        if (inputCheck(totalPemasukan)){
+        if (inputCheck(totalPemasukan)) {
             // Create user model
-            val transactionModel = TransactionModel(0, totalPemasukan.toInt(), tipeTransaksi, keterangan, tanggal)
+            val transactionModel =
+                TransactionModel(0, totalPemasukan.toInt(), tipeTransaksi, keterangan, tanggal)
             // Add data to database
             myViewModel.addTransaction(transactionModel)
             Toast.makeText(this, "Transaksi berhasil ditambahkan.", Toast.LENGTH_SHORT).show()
             // Finish activity
             finish()
         } else {
-            Toast.makeText(this, "Harap isi kolom total atau pilih produk.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Harap isi kolom total atau pilih produk.", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

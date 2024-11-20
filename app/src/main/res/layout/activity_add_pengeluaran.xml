@@ -66,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -101,7 +102,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <Button
@@ -110,9 +112,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="48dp"
-        android:backgroundTint="@color/color5"
+        android:backgroundTint="@color/color4"
         android:text="Simpan Transaksi"
-        android:textColor="@color/color2"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

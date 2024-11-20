@@ -9,6 +9,7 @@ import com.alviano.cuan.beta.activity.AddPemasukanActivity
 import com.alviano.cuan.beta.activity.AddPengeluaranActivity
 import com.alviano.cuan.beta.databinding.FragmentBottomSheetTransacBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
 class BottomSheetTransac : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentBottomSheetTransacBinding

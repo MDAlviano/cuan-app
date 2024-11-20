@@ -212,7 +212,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view3"
-            tools:listitem="@layout/viewholder_transacmasuk_transacpage" />
+            tools:listitem="@layout/vieholder_transaction_homepage" />
 
         <View
             android:id="@+id/view3"

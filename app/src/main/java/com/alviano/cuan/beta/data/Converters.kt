@@ -1,6 +1,7 @@
 package com.alviano.cuan.beta.data
 
 import androidx.room.TypeConverter
+import java.util.Date
 
 enum class TransactionType {
     MASUK, KELUAR

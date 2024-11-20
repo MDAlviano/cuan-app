@@ -1,6 +1,5 @@
 package com.alviano.cuan.beta.fragment.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,19 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alviano.cuan.beta.R
-import com.alviano.cuan.beta.activity.SettingsPageActivity
 import com.alviano.cuan.beta.fragment.transaction.TransactionFragment
 import com.alviano.cuan.beta.databinding.FragmentHomeBinding
 import com.alviano.cuan.beta.fragment.BottomSheetTransac
 import com.alviano.cuan.beta.fragment.products.ListProductFragment
-import com.alviano.cuan.beta.fragment.ReportFragment
-import com.alviano.cuan.beta.fragment.transaction.TransactionAdapter
-import com.alviano.cuan.beta.viewmodel.TransactionViewModel
+import com.alviano.cuan.beta.fragment.report.ReportFragment
+import com.alviano.cuan.beta.utils.formatAsCurrency
+import com.alviano.cuan.beta.viewmodel.HomeTransactionViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var transactionViewModel: TransactionViewModel
+    private lateinit var transactionViewModel: HomeTransactionViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,16 +36,29 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TransactionAdapter()
-//        Log.i("adapterHome", print(adapter).toString())
+        val adapter = HomeTransactionAdapter()
         val recentRecyclerView = view.findViewById<RecyclerView>(R.id.recentTransactionRecyclerView)
         recentRecyclerView.adapter = adapter
         recentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        transactionViewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
+        transactionViewModel = ViewModelProvider(this).get(HomeTransactionViewModel::class.java)
         transactionViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
             adapter.setData(user)
         })
+
+        transactionViewModel.todayTransactions.observe(viewLifecycleOwner) { transactions ->
+            adapter.setData(transactions)
+        }
+
+        transactionViewModel.todayIncome.observe(viewLifecycleOwner) { totalIncome ->
+            val formattedIncome = formatAsCurrency(totalIncome)
+            binding.pemasukanHome.text = formattedIncome
+        }
+
+        transactionViewModel.todayExpense.observe(viewLifecycleOwner) { totalExpense ->
+            val formattedExpense = formatAsCurrency(totalExpense)
+            binding.pengeluaranHome.text = formattedExpense
+        }
 
         binding.toHomeBtn.setOnClickListener {
             val homeFragment = HomeFragment()

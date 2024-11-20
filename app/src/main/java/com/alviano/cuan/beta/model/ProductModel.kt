@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "product_table")
 data class ProductModel(
     @PrimaryKey(autoGenerate = true) val productId: Int,
-    val image: ByteArray?,
+    val imagePath: String?,
     val name: String,
     val sellPrice: Int,
     val buyPrice: Int

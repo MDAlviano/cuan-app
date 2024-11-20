@@ -16,7 +16,7 @@ import com.alviano.cuan.beta.databinding.FragmentTransactionBinding
 import com.alviano.cuan.beta.fragment.BottomSheetTransac
 import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.fragment.products.ListProductFragment
-import com.alviano.cuan.beta.fragment.ReportFragment
+import com.alviano.cuan.beta.fragment.report.ReportFragment
 import com.alviano.cuan.beta.utils.formatAsCurrency
 import com.alviano.cuan.beta.viewmodel.TransactionViewModel
 
@@ -30,9 +30,8 @@ class TransactionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_transaction, container, false)
         binding = FragmentTransactionBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,7 +48,7 @@ class TransactionFragment : Fragment() {
         pemasukanTextView = binding.totalPemasukanTextView
         pengeluaranTextView = binding.totalPengeluaranTextView
 
-        transactionViewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
+        transactionViewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
         transactionViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
             adapter.setData(user)
         })

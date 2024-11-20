@@ -43,15 +43,22 @@ class ChooseProductAdapter(private val context: Context) : BaseAdapter() {
 
         // Bind data to views
         val product = getItem(position)
-        val imageByteArray = product.image
 
         binding.titleTxt.text = product.name
         binding.priceTxt.text = "Rp${product.sellPrice}"
 
-        // Converts ByteArray to Bitmap
-        val bitmap = imageByteArray?.let { BitmapFactory.decodeByteArray(imageByteArray, 0, it.size) }
+        val imagePath = product.imagePath
+
+        // Converts path to Bitmap
+        val bitmap = BitmapFactory.decodeFile(imagePath)
         binding.imageTxt.setImageBitmap(bitmap)
         binding.imageTxt.scaleType = ImageView.ScaleType.CENTER_CROP
+
+
+        // Converts ByteArray to Bitmap
+//        val bitmap = imageByteArray?.let { BitmapFactory.decodeByteArray(imageByteArray, 0, it.size) }
+//        binding.imageTxt.setImageBitmap(bitmap)
+//        binding.imageTxt.scaleType = ImageView.ScaleType.CENTER_CROP
 
         return view
     }

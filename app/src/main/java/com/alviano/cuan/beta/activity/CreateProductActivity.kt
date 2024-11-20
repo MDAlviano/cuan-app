@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.media.MediaMetadataRetriever.BitmapParams
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ import com.alviano.cuan.beta.model.ProductModel
 import com.alviano.cuan.beta.viewmodel.ProductViewModel
 import com.google.android.material.imageview.ShapeableImageView
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class CreateProductActivity : AppCompatActivity() {
 
@@ -48,16 +50,15 @@ class CreateProductActivity : AppCompatActivity() {
         addHargaBeli = findViewById(R.id.hargaBeli)
         addHargaJual = findViewById(R.id.hargaJual)
         saveButton = findViewById(R.id.saveBtn)
-        Log.i("hargaBeli", addHargaBeli.toString())
 
-        saveButton.setOnClickListener{
+        saveButton.setOnClickListener {
             insertDataToDatabase()
         }
 
         imageButton = findViewById(R.id.btnAddImg)
         btnBack = findViewById(R.id.btnBack)
 
-        imageButton.setOnClickListener{
+        imageButton.setOnClickListener {
             pickImageGallery()
         }
 
@@ -93,28 +94,27 @@ class CreateProductActivity : AppCompatActivity() {
 
         // Get button drawable as bitmap
         val imageButtonBitmap: Bitmap = imageButton.drawable.toBitmap()
-        Log.i("imageButtonBitmap", imageButtonBitmap.toString())
 
-        // Convert imageBitmap to ByteArray
-        val productImage: ByteArray? = if (imageButtonBitmap === imageButton.drawable.toBitmap()) {
-            val outputStream = ByteArrayOutputStream()
-            imageButtonBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
-            outputStream.toByteArray()
-        } else {
-            null
-        }
-//        Log.i("imageDataByteArray", productImage.toString())
+        val imagePath: String? = saveImage(imageButtonBitmap)
 
         val productName = addNamaProduk.text.toString()
         val sellPrice = addHargaJual.text.toString()
         val buyPrice = addHargaBeli.text.toString()
 
-        if (inputCheck(productName, sellPrice, buyPrice)){
+        if (inputCheck(productName, sellPrice, buyPrice)) {
             // Create user model
-            val productModel = ProductModel(0, productImage, productName, sellPrice.toInt(), buyPrice.toInt())
+            val productModel =
+                ProductModel(
+                    productId = 0,
+                    imagePath = imagePath,
+                    name = productName,
+                    sellPrice = sellPrice.toInt(),
+                    buyPrice = buyPrice.toInt()
+                )
             // Add data to database
             mViewModel.addProduct(productModel)
             Toast.makeText(this, "Produk telah ditambahkan.", Toast.LENGTH_SHORT).show()
+
             // Finish activity after done adding data
             finish()
         } else {
@@ -124,5 +124,22 @@ class CreateProductActivity : AppCompatActivity() {
 
     private fun inputCheck(productName: String, sellPrice: String, buyPrice: String): Boolean {
         return productName.isNotBlank() && sellPrice.isNotBlank() && buyPrice.isNotBlank()
+    }
+
+    private fun saveImage(bitmap: Bitmap): String? {
+        return try {
+            val fileName = "product_image_${System.currentTimeMillis()}.jpg"
+            val file = File(filesDir, fileName)
+
+            val outputStream = file.outputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            file.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 }

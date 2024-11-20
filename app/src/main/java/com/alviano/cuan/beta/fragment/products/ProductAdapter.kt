@@ -21,11 +21,11 @@ class ProductAdapter(private val onItemClick: (ProductModel) -> Unit): RecyclerV
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productModelList[position]
 
-        val imageByteArray = product.image
+        val imagePath = product.imagePath
         // Checks if there's no image in DB
-        if (imageByteArray != null) {
-            // Converts ByteArray to Bitmap
-            val bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
+        if (imagePath != null) {
+            // Converts path to Bitmap
+            val bitmap = BitmapFactory.decodeFile(imagePath)
             holder.binding.productImage.setImageBitmap(bitmap)
             holder.binding.productImage.scaleType = ImageView.ScaleType.CENTER_CROP
         } else {
