@@ -5,13 +5,11 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import com.alviano.cuan.beta.fragment.home.HomeFragment
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ActivityFragmentBinding
+import com.alviano.cuan.beta.fragment.home.HomeFragment
 
 class FragmentActivity : AppCompatActivity() {
 
@@ -45,6 +43,10 @@ class FragmentActivity : AppCompatActivity() {
                 } else {
                     doubleBackToExitPressedOnce = true
                     Toast.makeText(applicationContext, "Tekan tombol kembali sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
+                    mFragmentManager
+                        .beginTransaction()
+                        .add(R.id.fragment_container, fragmentHome, HomeFragment::class.java.simpleName)
+                        .commit()
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         doubleBackToExitPressedOnce = false
@@ -54,8 +56,6 @@ class FragmentActivity : AppCompatActivity() {
         })
 
     }
-
-    // blom bener
 
 
 }
