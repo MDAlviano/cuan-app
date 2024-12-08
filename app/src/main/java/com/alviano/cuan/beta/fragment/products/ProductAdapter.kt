@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.databinding.ProductCardBinding
 import com.alviano.cuan.beta.model.ProductModel
+import com.alviano.cuan.beta.utils.formatAsCurrency
 
 class ProductAdapter(private val onItemClick: (ProductModel) -> Unit): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -34,7 +35,9 @@ class ProductAdapter(private val onItemClick: (ProductModel) -> Unit): RecyclerV
         }
 
         holder.binding.productName.text = product.name
-        holder.binding.productPrice.text = "Rp${product.sellPrice}"
+
+        val formattedDataAmount = product.sellPrice
+        holder.binding.productPrice.text = formatAsCurrency(formattedDataAmount)
 
         holder.itemView.setOnClickListener {
             onItemClick(product)

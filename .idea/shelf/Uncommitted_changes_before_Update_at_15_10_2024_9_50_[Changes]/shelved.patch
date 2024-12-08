@@ -1,0 +1,571 @@
+Index: app/src/main/java/com/alviano/cuan/beta/adapter/ProductAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/adapter/ProductAdapter.kt b/app/src/main/java/com/alviano/cuan/beta/fragment/products/ProductAdapter.kt
+rename from app/src/main/java/com/alviano/cuan/beta/adapter/ProductAdapter.kt
+rename to app/src/main/java/com/alviano/cuan/beta/fragment/products/ProductAdapter.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/adapter/ProductAdapter.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/fragment/products/ProductAdapter.kt	(date 1728960599708)
+@@ -9,11 +9,11 @@
+ import androidx.recyclerview.widget.RecyclerView
+ import com.alviano.cuan.beta.R
+ import com.alviano.cuan.beta.databinding.ProductCardBinding
+-import com.alviano.cuan.beta.model.Product
++import com.alviano.cuan.beta.model.ProductModel
+ 
+-class ProductAdapter(private val onItemClick: (Product) -> Unit): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
++class ProductAdapter(private val onItemClick: (ProductModel) -> Unit): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+ 
+-    private var productList = emptyList<Product>()
++    private var productList = emptyList<ProductModel>()
+     private lateinit var context: Context
+ 
+     class ProductViewHolder(val binding: ProductCardBinding) :
+Index: app/src/main/java/com/alviano/cuan/beta/activity/FragmentActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.activity\r\n\r\nimport android.os.Bundle\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.alviano.cuan.beta.R\r\nimport com.alviano.cuan.beta.databinding.ActivityFragmentBinding\r\nimport com.alviano.cuan.beta.fragment.HomeFragment\r\n\r\nclass FragmentActivity : AppCompatActivity() {\r\n\r\n    private lateinit var binding: ActivityFragmentBinding\r\n    private var doubleBackToExitPressedOnce = false\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n//        setContentView(R.layout.activity_fragment)\r\n\r\n        binding = ActivityFragmentBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        val mFragmentManager = supportFragmentManager\r\n        val fragmentHome = HomeFragment()\r\n        val fragment = mFragmentManager.findFragmentByTag(HomeFragment::class.java.simpleName)\r\n\r\n        if (fragment !is HomeFragment) {\r\n            mFragmentManager\r\n                .beginTransaction()\r\n                .add(R.id.fragment_container, fragmentHome, HomeFragment::class.java.simpleName)\r\n                .commit()\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/activity/FragmentActivity.kt b/app/src/main/java/com/alviano/cuan/beta/activity/FragmentActivity.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/activity/FragmentActivity.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/activity/FragmentActivity.kt	(date 1728960266506)
+@@ -1,11 +1,14 @@
+ package com.alviano.cuan.beta.activity
+ 
+ import android.os.Bundle
++import android.os.Handler
++import android.os.Looper
++import android.widget.Toast
+ import androidx.activity.enableEdgeToEdge
+ import androidx.appcompat.app.AppCompatActivity
++import com.alviano.cuan.beta.fragment.HomeFragment
+ import com.alviano.cuan.beta.R
+ import com.alviano.cuan.beta.databinding.ActivityFragmentBinding
+-import com.alviano.cuan.beta.fragment.HomeFragment
+ 
+ class FragmentActivity : AppCompatActivity() {
+ 
+@@ -31,4 +34,19 @@
+                 .commit()
+         }
+     }
++
++    // blom bener
++    override fun onBackPressed() {
++
++        if (doubleBackToExitPressedOnce){
++            super.onBackPressed()
++            return
++        }
++
++        this.doubleBackToExitPressedOnce = true
++        Toast.makeText(this, "Tekan tombol kembali sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
++
++        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
++    }
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/alviano/cuan/beta/activity/CreateProductActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.activity\r\n\r\nimport android.content.ContentProvider\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.text.TextUtils\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.ImageButton\r\nimport android.widget.ImageView\r\nimport android.widget.Toast\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.ContentProviderCompat.requireContext\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport androidx.navigation.findNavController\r\nimport androidx.room.PrimaryKey\r\nimport com.alviano.cuan.beta.R\r\nimport com.alviano.cuan.beta.model.Product\r\nimport com.alviano.cuan.beta.viewmodel.ProductViewModel\r\nimport com.google.android.material.imageview.ShapeableImageView\r\nimport java.util.zip.Inflater\r\n\r\nclass CreateProductActivity : AppCompatActivity() {\r\n\r\n    private lateinit var mViewModel: ProductViewModel\r\n\r\n    private lateinit var imageButton: ShapeableImageView\r\n    private lateinit var btnBack: ImageButton\r\n    private lateinit var saveBtn: Button\r\n    private lateinit var addNamaProduk: EditText\r\n    private lateinit var addHargaJual: EditText\r\n    private lateinit var addHargaBeli: EditText\r\n\r\n    private lateinit var fab: Button\r\n\r\n    companion object {\r\n        const val IMAGE_REQUEST_CODE = 100\r\n    }\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n        setContentView(R.layout.activity_create_product)\r\n\r\n        fab = findViewById(R.id.saveBtn)\r\n\r\n        mViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)\r\n\r\n        addNamaProduk = findViewById(R.id.namaProduk)\r\n        addHargaBeli = findViewById(R.id.hargaBeli)\r\n        addHargaJual = findViewById(R.id.hargaJual)\r\n\r\n        fab.setOnClickListener{\r\n            insertDataToDatabase()\r\n        }\r\n\r\n        imageButton = findViewById(R.id.btnAddImg)\r\n        btnBack = findViewById(R.id.btnBack)\r\n\r\n//        imageButton.setOnClickListener{\r\n//            pickImageGallery()\r\n//        }\r\n\r\n        btnBack.setOnClickListener {\r\n            finish()\r\n        }\r\n\r\n    }\r\n\r\n//    fun onCreateView(\r\n//        inflater: LayoutInflater,\r\n//        container: ViewGroup?,\r\n//        savedInstanceState: Bundle?\r\n//    ): View {\r\n//        // Inflate the layout\r\n//        val view = inflater.inflate(R.layout.activity_create_product, container, false)\r\n//        val fab = view.findViewById<View>(R.id.saveBtn)\r\n//\r\n//        mViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)\r\n//\r\n//        addNamaProduk = findViewById(R.id.namaProduk)\r\n//        addHargaBeli = findViewById(R.id.hargaBeli)\r\n//        addHargaJual = findViewById(R.id.hargaJual)\r\n//\r\n//        fab.setOnClickListener{\r\n//            insertDataToDatabase()\r\n//        }\r\n//\r\n//        return view\r\n//    }\r\n\r\n    private fun pickImageGallery() {\r\n        val intent = Intent(Intent.ACTION_PICK)\r\n        intent.type = \"image/*\"\r\n        startActivityForResult(intent, IMAGE_REQUEST_CODE)\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {\r\n            imageButton.setImageURI(data?.data)\r\n            imageButton.scaleType = ImageView.ScaleType.CENTER_CROP\r\n            Toast.makeText(this, \"Sukses menambahkan foto\", Toast.LENGTH_LONG).show()\r\n        } else {\r\n            Toast.makeText(this, \"Gagal menambahkan foto\", Toast.LENGTH_LONG).show()\r\n        }\r\n    }\r\n\r\n    private fun insertDataToDatabase() {\r\n        val productName = addNamaProduk.text.toString()\r\n        val sellPrice = addHargaJual.text.toString()\r\n        val buyPrice = addHargaBeli.text.toString()\r\n\r\n        if (inputCheck(productName, sellPrice, buyPrice)){\r\n            // Create user model\r\n            val product = Product(0, productName, sellPrice.toInt(), buyPrice.toInt())\r\n            // Add data to database\r\n            mViewModel.addProduct(product)\r\n            Toast.makeText(this, \"Produk telah ditambahkan.\", Toast.LENGTH_LONG).show()\r\n            finish()\r\n            // Navigate back\r\n//            findNavController().navigate(R.id.)\r\n        } else {\r\n            Toast.makeText(this, \"Harap isi semua kolom.\", Toast.LENGTH_LONG).show()\r\n        }\r\n    }\r\n\r\n    private fun inputCheck(productName: String, sellPrice: String, buyPrice: String): Boolean {\r\n        return productName.isNotBlank() && sellPrice.isNotBlank() && buyPrice.isNotBlank()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/activity/CreateProductActivity.kt b/app/src/main/java/com/alviano/cuan/beta/activity/CreateProductActivity.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/activity/CreateProductActivity.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/activity/CreateProductActivity.kt	(date 1728960233831)
+@@ -121,7 +121,6 @@
+             // Add data to database
+             mViewModel.addProduct(product)
+             Toast.makeText(this, "Produk telah ditambahkan.", Toast.LENGTH_LONG).show()
+-            finish()
+             // Navigate back
+ //            findNavController().navigate(R.id.)
+         } else {
+Index: app/src/main/java/com/alviano/cuan/beta/fragment/TransactionFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.fragment\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.alviano.cuan.beta.R\r\nimport com.alviano.cuan.beta.activity.SettingsPageActivity\r\nimport com.alviano.cuan.beta.databinding.FragmentTransactionBinding\r\n\r\nclass TransactionFragment : Fragment() {\r\n\r\n    private lateinit var binding: FragmentTransactionBinding\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n//        return inflater.inflate(R.layout.fragment_transaction, container, false)\r\n        binding = FragmentTransactionBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        binding.toHomeBtn.setOnClickListener {\r\n            val homeFragment = HomeFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, homeFragment, HomeFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toProductBtn.setOnClickListener {\r\n            val productFragment = ListProductFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, productFragment, ListProductFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toTransacBtn.setOnClickListener {\r\n            val transactionFragment = TransactionFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, transactionFragment, TransactionFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toLaporBtn.setOnClickListener {\r\n            val reportFragment = ReportFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, reportFragment, ReportFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toSettingsBtn.setOnClickListener {\r\n            val intent = Intent(activity, SettingsPageActivity::class.java)\r\n            activity?.startActivity(intent)\r\n        }\r\n\r\n        binding.addTransactionBtn.setOnClickListener {\r\n            BottomSheetTransac().show(parentFragmentManager, \"newTransactTag\")\r\n        }\r\n\r\n    }\r\n\r\n    override fun onDestroy() {\r\n        super.onDestroy()\r\n        activity?.finish()\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/fragment/TransactionFragment.kt b/app/src/main/java/com/alviano/cuan/beta/fragment/TransactionFragment.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/fragment/TransactionFragment.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/fragment/TransactionFragment.kt	(date 1728960599713)
+@@ -1,14 +1,17 @@
+-package com.alviano.cuan.beta.fragment
++package com.alviano.cuan.beta.activity
+ 
+ import android.content.Intent
+ import android.os.Bundle
+-import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.fragment.app.Fragment
+ import com.alviano.cuan.beta.R
+-import com.alviano.cuan.beta.activity.SettingsPageActivity
+ import com.alviano.cuan.beta.databinding.FragmentTransactionBinding
++import com.alviano.cuan.beta.fragment.BottomSheetTransac
++import com.alviano.cuan.beta.fragment.ListProductFragment
++import com.alviano.cuan.beta.fragment.ReportFragment
++import com.alviano.cuan.beta.fragment.home.HomeFragment
+ 
+ class TransactionFragment : Fragment() {
+ 
+@@ -81,9 +84,4 @@
+ 
+     }
+ 
+-    override fun onDestroy() {
+-        super.onDestroy()
+-        activity?.finish()
+-    }
+-
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/alviano/cuan/beta/model/Product.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/model/Product.kt b/app/src/main/java/com/alviano/cuan/beta/model/ProductModel.kt
+rename from app/src/main/java/com/alviano/cuan/beta/model/Product.kt
+rename to app/src/main/java/com/alviano/cuan/beta/model/ProductModel.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/model/Product.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/model/ProductModel.kt	(date 1728958737214)
+@@ -7,10 +7,9 @@
+ 
+ @Parcelize
+ @Entity(tableName = "product_table")
+-data class Product(
+-    @PrimaryKey(autoGenerate = true)
+-    val id: Int,
+-//    val image:Int,
++data class ProductModel(
++    @PrimaryKey(autoGenerate = true) val productId: Int,
++    val image: ByteArray?,
+     val name: String,
+     val sellPrice: Int,
+     val buyPrice: Int
+Index: app/src/main/java/com/alviano/cuan/beta/adapter/InsertProductAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.adapter\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.alviano.cuan.beta.databinding.ViewholderProductBinding\r\nimport com.alviano.cuan.beta.model.Product\r\n\r\nclass InsertProductAdapter(private val dataList: List<Product>) :\r\n    RecyclerView.Adapter<InsertProductAdapter.MyViewHolder>() {\r\n\r\n    class MyViewHolder(val binding: ViewholderProductBinding) :\r\n        RecyclerView.ViewHolder(binding.root)\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {\r\n        val context = parent.context\r\n        val binding = ViewholderProductBinding.inflate(LayoutInflater.from(context), parent, false)\r\n        return MyViewHolder(binding)\r\n    }\r\n\r\n    override fun getItemCount(): Int = dataList.size\r\n\r\n    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {\r\n        val product = dataList[position]\r\n//        holder.binding.imageTxt.setImageResource(product.image)\r\n        holder.binding.titleTxt.text = product.name\r\n        holder.binding.priceTxt.text = \"Rp${product.sellPrice.toString()}\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/adapter/InsertProductAdapter.kt b/app/src/main/java/com/alviano/cuan/beta/adapter/InsertProductAdapter.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/adapter/InsertProductAdapter.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/adapter/InsertProductAdapter.kt	(date 1728960337036)
+@@ -3,8 +3,8 @@
+ import android.view.LayoutInflater
+ import android.view.ViewGroup
+ import androidx.recyclerview.widget.RecyclerView
++import com.alviano.cuan.beta.data.Product
+ import com.alviano.cuan.beta.databinding.ViewholderProductBinding
+-import com.alviano.cuan.beta.model.Product
+ 
+ class InsertProductAdapter(private val dataList: List<Product>) :
+     RecyclerView.Adapter<InsertProductAdapter.MyViewHolder>() {
+@@ -22,8 +22,8 @@
+ 
+     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+         val product = dataList[position]
+-//        holder.binding.imageTxt.setImageResource(product.image)
++        holder.binding.imageTxt.setImageResource(product.image)
+         holder.binding.titleTxt.text = product.name
+-        holder.binding.priceTxt.text = "Rp${product.sellPrice.toString()}"
++        holder.binding.priceTxt.text = "Rp${product.price.toString()}"
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/fHome\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/color3\"\r\n    android:orientation=\"vertical\"\r\n    android:fitsSystemWindows=\"true\"\r\n    tools:context=\".fragment.HomeFragment\">\r\n\r\n    <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n        android:id=\"@+id/addTransactionBtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginEnd=\"24dp\"\r\n        android:layout_marginBottom=\"24dp\"\r\n        android:clickable=\"true\"\r\n        android:focusable=\"true\"\r\n        android:tint=\"@color/white\"\r\n        android:backgroundTint=\"@color/color8\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/bottomNavigationView\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:srcCompat=\"@drawable/ic_add\" />\r\n\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottomNavigationView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/color3\"\r\n        android:paddingVertical=\"5dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <androidx.constraintlayout.widget.ConstraintLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/linearLayout4\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginTop=\"10dp\"\r\n                    android:background=\"@drawable/color9_bg\"\r\n                    android:orientation=\"horizontal\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/toHomeBtn\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_weight=\"1\"\r\n                        android:background=\"@null\"\r\n                        app:srcCompat=\"@drawable/house\" />\r\n                </LinearLayout>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/textView12\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Home\"\r\n                    android:textColor=\"@color/color8\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toBottomOf=\"@+id/linearLayout4\" />\r\n            </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n            <androidx.constraintlayout.widget.ConstraintLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/linearLayout3\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginTop=\"10dp\"\r\n                    android:background=\"@drawable/color9_bg\"\r\n                    android:orientation=\"horizontal\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/toTransacBtn\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_weight=\"1\"\r\n                        android:background=\"@null\"\r\n                        app:srcCompat=\"@drawable/wallet_3\" />\r\n                </LinearLayout>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/textView11\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Transaksi\"\r\n                    android:textColor=\"@color/color8\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toBottomOf=\"@+id/linearLayout3\" />\r\n            </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n            <androidx.constraintlayout.widget.ConstraintLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/linearLayout2\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginTop=\"10dp\"\r\n                    android:background=\"@drawable/color9_bg\"\r\n                    android:orientation=\"horizontal\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/toProductBtn\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_weight=\"1\"\r\n                        android:background=\"@null\"\r\n                        app:srcCompat=\"@drawable/shop\" />\r\n                </LinearLayout>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/textView10\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Produk\"\r\n                    android:textColor=\"@color/color8\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toBottomOf=\"@+id/linearLayout2\" />\r\n            </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n            <androidx.constraintlayout.widget.ConstraintLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_gravity=\"center_horizontal\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/linearLayout\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginTop=\"10dp\"\r\n                    android:background=\"@drawable/color9_bg\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:textAlignment=\"center\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintHorizontal_bias=\"0.49\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                    <ImageButton\r\n                        android:id=\"@+id/toLaporBtn\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_weight=\"1\"\r\n                        android:background=\"@null\"\r\n                        app:srcCompat=\"@drawable/status\" />\r\n                </LinearLayout>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/textView9\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Laporan\"\r\n                    android:textColor=\"@color/color8\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toBottomOf=\"@+id/linearLayout\" />\r\n            </androidx.constraintlayout.widget.ConstraintLayout>\r\n        </LinearLayout>\r\n    </com.google.android.material.bottomnavigation.BottomNavigationView>\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:id=\"@+id/constraintLayout3\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"590dp\"\r\n        android:background=\"@drawable/transaksi_bg\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/constraintLayout4\">\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/view3\" />\r\n\r\n        <View\r\n            android:id=\"@+id/view3\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"1dp\"\r\n            android:layout_marginTop=\"8dp\"\r\n            android:background=\"@color/gray\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.5\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/textView6\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/lebihDetail\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"24dp\"\r\n            android:text=\"Lebih Detail\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"10sp\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.881\"\r\n            app:layout_constraintStart_toEndOf=\"@+id/textView6\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView6\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"22dp\"\r\n            android:text=\"Transaksi Terkini\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"17dp\"\r\n            android:textStyle=\"bold\"\r\n\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.045\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:id=\"@+id/topHome\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"85dp\"\r\n        android:padding=\"5dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/logoImage\"\r\n            android:layout_width=\"203dp\"\r\n            android:layout_height=\"60dp\"\r\n            android:adjustViewBounds=\"true\"\r\n            android:scaleType=\"fitXY\"\r\n            android:src=\"@drawable/cuansidelogo\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toStartOf=\"@+id/toSettingsBtn\"\r\n            app:layout_constraintHorizontal_bias=\"0.594\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintVertical_bias=\"0.533\" />\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/toSettingsBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"4dp\"\r\n            android:layout_marginEnd=\"4dp\"\r\n            app:tint=\"@color/white\"\r\n            android:background=\"@null\"\r\n            android:src=\"@drawable/baseline_settings_24\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:id=\"@+id/constraintLayout4\"\r\n        android:layout_width=\"373dp\"\r\n        android:layout_height=\"183dp\"\r\n        android:layout_marginTop=\"40dp\"\r\n        android:background=\"@drawable/display_bg\"\r\n        android:translationZ=\"20dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.421\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/topHome\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Hari Ini\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"22dp\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <View\r\n            android:id=\"@+id/line1\"\r\n            android:background=\"@color/gray\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"1dp\"\r\n            android:layout_marginHorizontal=\"25dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/textView\"/>\r\n\r\n        <View\r\n            android:id=\"@+id/imageView3\"\r\n            android:layout_width=\"1dp\"\r\n            android:layout_height=\"90dp\"\r\n            android:background=\"@color/gray\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toStartOf=\"@+id/constraintLayout2\"\r\n            app:layout_constraintStart_toEndOf=\"@+id/constraintLayout\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/line1\"\r\n            app:layout_constraintVertical_bias=\"1.0\" />\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/constraintLayout2\"\r\n            android:layout_width=\"155dp\"\r\n            android:layout_height=\"85dp\"\r\n            android:layout_marginBottom=\"4dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/textView4\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Pengeluaran\"\r\n                android:textColor=\"@color/color4\"\r\n                android:textSize=\"12sp\"\r\n\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/pengeluaranHome\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Rp. 0\"\r\n                android:textSize=\"25dp\"\r\n                android:textColor=\"@color/black\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/textView4\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/constraintLayout\"\r\n            android:layout_width=\"155dp\"\r\n            android:layout_height=\"85dp\"\r\n            android:layout_marginBottom=\"4dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/textView2\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Pemasukan\"\r\n                android:textColor=\"@color/color8\"\r\n                android:textSize=\"12sp\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/pemasukanHome\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Rp. 0\"\r\n                android:textSize=\"25dp\"\r\n                android:textColor=\"@color/black\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/textView2\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_home.xml b/app/src/main/res/layout/fragment_home.xml
+--- a/app/src/main/res/layout/fragment_home.xml	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/res/layout/fragment_home.xml	(date 1728958737217)
+@@ -8,7 +8,7 @@
+     android:background="@color/color3"
+     android:orientation="vertical"
+     android:fitsSystemWindows="true"
+-    tools:context=".fragment.HomeFragment">
++    tools:context=".fragment.home.HomeFragment">
+ 
+     <com.google.android.material.floatingactionbutton.FloatingActionButton
+         android:id="@+id/addTransactionBtn"
+Index: app/src/main/java/com/alviano/cuan/beta/activity/ChooseProductActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/activity/ChooseProductActivity.kt b/app/src/main/java/com/alviano/cuan/beta/activity/ChooseProductActivity.kt
+new file mode 100644
+--- /dev/null	(date 1728959931219)
++++ b/app/src/main/java/com/alviano/cuan/beta/activity/ChooseProductActivity.kt	(date 1728959931219)
+@@ -0,0 +1,31 @@
++package com.alviano.cuan.beta.activity
++
++import android.os.Bundle
++import androidx.activity.enableEdgeToEdge
++import androidx.appcompat.app.AppCompatActivity
++import com.alviano.cuan.beta.databinding.ActivityChooseProductBinding
++
++class ChooseProductActivity : AppCompatActivity() {
++
++    private lateinit var binding: ActivityChooseProductBinding
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        enableEdgeToEdge()
++        binding = ActivityChooseProductBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++//
++//        val recyclerView = binding.allProduct
++//        recyclerView.layoutManager = LinearLayoutManager(this)
++//
++//        val data = ArrayList<Product>()
++//
++//        data.add(Product(R.drawable.pensil, "Pensil", 1200))
++//        data.add(Product(R.drawable.spidol, "Spidol", 2000))
++//        data.add(Product(R.drawable.buku_tulis, "Buku Tulis", 1500))
++//
++//        val adapter = InsertProductAdapter(data)
++//        recyclerView.adapter = adapter
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/alviano/cuan/beta/fragment/ReportFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.fragment\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.alviano.cuan.beta.R\r\nimport com.alviano.cuan.beta.activity.SettingsPageActivity\r\nimport com.alviano.cuan.beta.databinding.FragmentReportBinding\r\n\r\nclass ReportFragment : Fragment() {\r\n\r\n    private lateinit var binding: FragmentReportBinding\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n//        return inflater.inflate(R.layout.fragment_report, container, false)\r\n        binding = FragmentReportBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        binding.toHomeBtn.setOnClickListener {\r\n            val homeFragment = HomeFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, homeFragment, HomeFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toProductBtn.setOnClickListener {\r\n            val productFragment = ListProductFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, productFragment, ListProductFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toTransacBtn.setOnClickListener {\r\n            val transactionFragment = TransactionFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, transactionFragment, TransactionFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toLaporBtn.setOnClickListener {\r\n            val reportFragment = ReportFragment()\r\n            val mFragmentManager = parentFragmentManager\r\n            mFragmentManager\r\n                .beginTransaction().apply {\r\n                    replace(R.id.fragment_container, reportFragment, ReportFragment::class.java.simpleName)\r\n                    addToBackStack(null)\r\n                    commit()\r\n                }\r\n        }\r\n\r\n        binding.toSettingsBtn.setOnClickListener {\r\n            val intent = Intent(activity, SettingsPageActivity::class.java)\r\n            activity?.startActivity(intent)\r\n        }\r\n    }\r\n\r\n    override fun onDestroy() {\r\n        super.onDestroy()\r\n        activity?.finish()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/fragment/ReportFragment.kt b/app/src/main/java/com/alviano/cuan/beta/fragment/ReportFragment.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/fragment/ReportFragment.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/fragment/ReportFragment.kt	(date 1728958737212)
+@@ -9,6 +9,8 @@
+ import com.alviano.cuan.beta.R
+ import com.alviano.cuan.beta.activity.SettingsPageActivity
+ import com.alviano.cuan.beta.databinding.FragmentReportBinding
++import com.alviano.cuan.beta.fragment.home.HomeFragment
++import com.alviano.cuan.beta.fragment.products.ListProductFragment
+ 
+ class ReportFragment : Fragment() {
+ 
+Index: app/src/main/java/com/alviano/cuan/beta/repository/ProductRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.repository\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport com.alviano.cuan.beta.data.ProductDao\r\nimport com.alviano.cuan.beta.model.Product\r\n\r\nclass ProductRepository(private val productDao: ProductDao) {\r\n\r\n    val readAllData: LiveData<List<Product>> = productDao.readALlData()\r\n\r\n    suspend fun addProduct(product: Product) {\r\n        productDao.addProduct(product)\r\n    }\r\n\r\n    suspend fun updateProduct(product: Product) {\r\n        productDao.updateProduct(product)\r\n    }\r\n\r\n    suspend fun deleteProduct(product: Product) {\r\n        productDao.deleteProduct(product)\r\n    }\r\n\r\n//    suspend fun deleteAllProducts() {\r\n//        productDao.deleteAllProducts()\r\n//    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/repository/ProductRepository.kt b/app/src/main/java/com/alviano/cuan/beta/repository/ProductRepository.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/repository/ProductRepository.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/repository/ProductRepository.kt	(date 1728958737215)
+@@ -2,22 +2,22 @@
+ 
+ import androidx.lifecycle.LiveData
+ import com.alviano.cuan.beta.data.ProductDao
+-import com.alviano.cuan.beta.model.Product
++import com.alviano.cuan.beta.model.ProductModel
+ 
+ class ProductRepository(private val productDao: ProductDao) {
+ 
+-    val readAllData: LiveData<List<Product>> = productDao.readALlData()
++    val readAllData: LiveData<List<ProductModel>> = productDao.readALlData()
+ 
+-    suspend fun addProduct(product: Product) {
+-        productDao.addProduct(product)
++    suspend fun addProduct(productModel: ProductModel) {
++        productDao.addProduct(productModel)
+     }
+ 
+-    suspend fun updateProduct(product: Product) {
+-        productDao.updateProduct(product)
++    suspend fun updateProduct(productModel: ProductModel) {
++        productDao.updateProduct(productModel)
+     }
+ 
+-    suspend fun deleteProduct(product: Product) {
+-        productDao.deleteProduct(product)
++    suspend fun deleteProduct(productModel: ProductModel) {
++        productDao.deleteProduct(productModel)
+     }
+ 
+ //    suspend fun deleteAllProducts() {
+Index: app/src/main/res/navigation/my_nav.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/my_nav.xml\"\r\n    app:startDestination=\"@id/listProductFragment\">\r\n\r\n    <activity\r\n        android:id=\"@+id/createProductActivity\"\r\n        android:name=\"com.alviano.cuan.beta.activity.CreateProductActivity\"\r\n        android:label=\"activity_create_product\"\r\n        tools:layout=\"@layout/activity_create_product\" />\r\n    <fragment\r\n        android:id=\"@+id/listProductFragment\"\r\n        android:name=\"com.alviano.cuan.beta.fragment.ListProductFragment\"\r\n        android:label=\"fragment_list_product\"\r\n        tools:layout=\"@layout/fragment_list_product\" >\r\n        <action\r\n            android:id=\"@+id/action_listProductFragment_to_createProductActivity\"\r\n            app:destination=\"@id/createProductActivity\" />\r\n    </fragment>\r\n</navigation>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/navigation/my_nav.xml b/app/src/main/res/navigation/my_nav.xml
+--- a/app/src/main/res/navigation/my_nav.xml	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/res/navigation/my_nav.xml	(date 1728958737219)
+@@ -12,7 +12,7 @@
+         tools:layout="@layout/activity_create_product" />
+     <fragment
+         android:id="@+id/listProductFragment"
+-        android:name="com.alviano.cuan.beta.fragment.ListProductFragment"
++        android:name="com.alviano.cuan.beta.fragment.products.ListProductFragment"
+         android:label="fragment_list_product"
+         tools:layout="@layout/fragment_list_product" >
+         <action
+Index: app/src/main/res/layout/fragment_list_product.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/fProduct\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:fitsSystemWindows=\"true\"\r\n    android:background=\"@color/color3\"\r\n    tools:context=\".fragment.ListProductFragment\">\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:background=\"@color/white\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/constraintLayout5\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:background=\"@color/color3\"\r\n            android:paddingVertical=\"7dp\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/textView3\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"5dp\"\r\n                android:layout_marginBottom=\"5dp\"\r\n                android:text=\"Daftar Produk\"\r\n                android:textColor=\"@color/white\"\r\n                android:textSize=\"27sp\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <ImageButton\r\n                android:id=\"@+id/toSettingsBtn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"3dp\"\r\n                android:layout_marginEnd=\"8dp\"\r\n                android:background=\"@null\"\r\n                android:src=\"@drawable/baseline_settings_24\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:tint=\"@color/white\" />\r\n\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n        <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n            android:id=\"@+id/addProductBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginEnd=\"24dp\"\r\n            android:layout_marginBottom=\"24dp\"\r\n            android:backgroundTint=\"@color/color8\"\r\n            android:clickable=\"true\"\r\n            android:focusable=\"true\"\r\n            android:tint=\"@color/white\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/bottomNavigationView\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:srcCompat=\"@drawable/ic_add\" />\r\n\r\n        <com.google.android.material.bottomnavigation.BottomNavigationView\r\n            android:id=\"@+id/bottomNavigationView\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:background=\"@color/color3\"\r\n            android:paddingVertical=\"5dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <androidx.constraintlayout.widget.ConstraintLayout\r\n                    android:layout_width=\"0dp\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_weight=\"1\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <LinearLayout\r\n                        android:id=\"@+id/linearLayout4\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"10dp\"\r\n                        android:background=\"@drawable/color9_bg\"\r\n                        android:orientation=\"horizontal\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                        <ImageButton\r\n                            android:id=\"@+id/toHomeBtn\"\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:layout_weight=\"1\"\r\n                            android:background=\"@null\"\r\n                            app:srcCompat=\"@drawable/house\" />\r\n                    </LinearLayout>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/textView12\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"Home\"\r\n                        android:textColor=\"@color/color8\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout4\" />\r\n                </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n                <androidx.constraintlayout.widget.ConstraintLayout\r\n                    android:layout_width=\"0dp\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_weight=\"1\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <LinearLayout\r\n                        android:id=\"@+id/linearLayout3\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"10dp\"\r\n                        android:background=\"@drawable/color9_bg\"\r\n                        android:orientation=\"horizontal\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                        <ImageButton\r\n                            android:id=\"@+id/toTransacBtn\"\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:layout_weight=\"1\"\r\n                            android:background=\"@null\"\r\n                            app:srcCompat=\"@drawable/wallet_3\" />\r\n                    </LinearLayout>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/textView11\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"Transaksi\"\r\n                        android:textColor=\"@color/color8\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout3\" />\r\n                </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n                <androidx.constraintlayout.widget.ConstraintLayout\r\n                    android:layout_width=\"0dp\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_weight=\"1\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <LinearLayout\r\n                        android:id=\"@+id/linearLayout2\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"10dp\"\r\n                        android:background=\"@drawable/color9_bg\"\r\n                        android:orientation=\"horizontal\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                        <ImageButton\r\n                            android:id=\"@+id/toProductBtn\"\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:layout_weight=\"1\"\r\n                            android:background=\"@null\"\r\n                            app:srcCompat=\"@drawable/shop\" />\r\n                    </LinearLayout>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/textView10\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"Produk\"\r\n                        android:textColor=\"@color/color8\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout2\" />\r\n                </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n                <androidx.constraintlayout.widget.ConstraintLayout\r\n                    android:layout_width=\"0dp\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_gravity=\"center_horizontal\"\r\n                    android:layout_weight=\"1\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <LinearLayout\r\n                        android:id=\"@+id/linearLayout\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"10dp\"\r\n                        android:background=\"@drawable/color9_bg\"\r\n                        android:orientation=\"horizontal\"\r\n                        android:textAlignment=\"center\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintHorizontal_bias=\"0.49\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                        <ImageButton\r\n                            android:id=\"@+id/toLaporBtn\"\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:layout_weight=\"1\"\r\n                            android:background=\"@null\"\r\n                            app:srcCompat=\"@drawable/status\" />\r\n                    </LinearLayout>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/textView9\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"Laporan\"\r\n                        android:textColor=\"@color/color8\"\r\n                        app:layout_constraintEnd_toEndOf=\"parent\"\r\n                        app:layout_constraintStart_toStartOf=\"parent\"\r\n                        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout\" />\r\n                </androidx.constraintlayout.widget.ConstraintLayout>\r\n            </LinearLayout>\r\n        </com.google.android.material.bottomnavigation.BottomNavigationView>\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/recyclerView\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"0dp\"\r\n            android:paddingBottom=\"20dp\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/bottomNavigationView\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.0\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/constraintLayout5\"\r\n            app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_list_product.xml b/app/src/main/res/layout/fragment_list_product.xml
+--- a/app/src/main/res/layout/fragment_list_product.xml	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/res/layout/fragment_list_product.xml	(date 1728958737218)
+@@ -7,7 +7,7 @@
+     android:layout_height="match_parent"
+     android:fitsSystemWindows="true"
+     android:background="@color/color3"
+-    tools:context=".fragment.ListProductFragment">
++    tools:context=".fragment.products.ListProductFragment">
+ 
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+Index: app/src/main/java/com/alviano/cuan/beta/data/ProductDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.alviano.cuan.beta.data\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.room.Dao\r\nimport androidx.room.Delete\r\nimport androidx.room.Insert\r\nimport androidx.room.OnConflictStrategy\r\nimport androidx.room.Query\r\nimport androidx.room.Update\r\nimport com.alviano.cuan.beta.model.Product\r\n\r\n@Dao\r\ninterface ProductDao {\r\n\r\n    @Insert(onConflict = OnConflictStrategy.IGNORE)\r\n    suspend fun addProduct(product: Product)\r\n\r\n    @Update\r\n    suspend fun updateProduct(product: Product)\r\n\r\n    @Delete\r\n    suspend fun deleteProduct(product: Product)\r\n\r\n    @Query(\"DELETE FROM product_table\")\r\n    suspend fun deleteAllProducts()\r\n\r\n    @Query(\"SELECT * FROM product_table ORDER BY id DESC\")\r\n    fun readALlData(): LiveData<List<Product>>\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/data/ProductDao.kt b/app/src/main/java/com/alviano/cuan/beta/data/ProductDao.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/data/ProductDao.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/data/ProductDao.kt	(date 1728958737211)
+@@ -7,24 +7,24 @@
+ import androidx.room.OnConflictStrategy
+ import androidx.room.Query
+ import androidx.room.Update
+-import com.alviano.cuan.beta.model.Product
++import com.alviano.cuan.beta.model.ProductModel
+ 
+ @Dao
+ interface ProductDao {
+ 
+     @Insert(onConflict = OnConflictStrategy.IGNORE)
+-    suspend fun addProduct(product: Product)
++    suspend fun addProduct(productModel: ProductModel)
+ 
+     @Update
+-    suspend fun updateProduct(product: Product)
++    suspend fun updateProduct(productModel: ProductModel)
+ 
+     @Delete
+-    suspend fun deleteProduct(product: Product)
++    suspend fun deleteProduct(productModel: ProductModel)
+ 
+     @Query("DELETE FROM product_table")
+     suspend fun deleteAllProducts()
+ 
+-    @Query("SELECT * FROM product_table ORDER BY id DESC")
+-    fun readALlData(): LiveData<List<Product>>
++    @Query("SELECT * FROM product_table ORDER BY productId DESC")
++    fun readALlData(): LiveData<List<ProductModel>>
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/alviano/cuan/beta/fragment/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/fragment/HomeFragment.kt b/app/src/main/java/com/alviano/cuan/beta/fragment/home/HomeFragment.kt
+rename from app/src/main/java/com/alviano/cuan/beta/fragment/HomeFragment.kt
+rename to app/src/main/java/com/alviano/cuan/beta/fragment/home/HomeFragment.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/fragment/HomeFragment.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/fragment/home/HomeFragment.kt	(date 1728958737213)
+@@ -1,4 +1,4 @@
+-package com.alviano.cuan.beta.fragment
++package com.alviano.cuan.beta.fragment.home
+ 
+ import android.content.Intent
+ import android.os.Bundle
+@@ -9,6 +9,9 @@
+ import com.alviano.cuan.beta.R
+ import com.alviano.cuan.beta.activity.SettingsPageActivity
+ import com.alviano.cuan.beta.databinding.FragmentHomeBinding
++import com.alviano.cuan.beta.fragment.BottomSheetTransac
++import com.alviano.cuan.beta.fragment.products.ListProductFragment
++import com.alviano.cuan.beta.fragment.ReportFragment
+ 
+ class HomeFragment : Fragment() {
+ 
+Index: app/src/main/res/layout/product_card.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:id=\"@+id/productCard\"\r\n>\r\n    <FrameLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginHorizontal=\"15dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:padding=\"1dp\"\r\n        android:background=\"@drawable/rounded_corner\"\r\n        android:elevation=\"3dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n\r\n    <androidx.cardview.widget.CardView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:cardCornerRadius=\"15dp\"\r\n        app:cardElevation=\"3dp\"\r\n        app:cardBackgroundColor=\"@color/white\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\">\r\n\r\n            <ImageView\r\n                android:id=\"@+id/productImage\"\r\n                android:layout_width=\"100dp\"\r\n                android:layout_height=\"100dp\"\r\n                android:src=\"@drawable/buku_tulis\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:orientation=\"vertical\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintStart_toEndOf=\"@id/productImage\"\r\n                app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                <TextView\r\n                    android:id=\"@+id/productName\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginBottom=\"6dp\"\r\n                    android:text=\"Buku tulis\"\r\n                    android:textColor=\"@color/black\"\r\n                    android:textStyle=\"bold\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/productPrice\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:textColor=\"@color/black\"\r\n                    android:text=\"Rp500\" />\r\n\r\n            </LinearLayout>\r\n\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    </androidx.cardview.widget.CardView>\r\n\r\n    </FrameLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/product_card.xml b/app/src/main/res/layout/product_card.xml
+--- a/app/src/main/res/layout/product_card.xml	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/res/layout/product_card.xml	(date 1728958737218)
+@@ -35,7 +35,8 @@
+                 android:id="@+id/productImage"
+                 android:layout_width="100dp"
+                 android:layout_height="100dp"
+-                android:src="@drawable/buku_tulis"
++                android:src="@drawable/image_placeholder"
++                android:background="@android:color/transparent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent" />
+Index: app/src/main/java/com/alviano/cuan/beta/model/TransactionModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/model/TransactionModel.kt b/app/src/main/java/com/alviano/cuan/beta/model/TransactionModel.kt
+new file mode 100644
+--- /dev/null	(date 1728958737214)
++++ b/app/src/main/java/com/alviano/cuan/beta/model/TransactionModel.kt	(date 1728958737214)
+@@ -0,0 +1,15 @@
++package com.alviano.cuan.beta.model
++
++import android.os.Parcelable
++import androidx.room.Entity
++import androidx.room.PrimaryKey
++import kotlinx.parcelize.Parcelize
++
++@Parcelize
++@Entity(tableName = "transaction_table")
++data class TransactionModel(
++    @PrimaryKey(autoGenerate = true) val transactionId: Int,
++    val totalAmount: Int,
++    val transactionType: String,
++    val description: String,
++) : Parcelable
+\ No newline at end of file
+Index: app/src/main/res/drawable/image_placeholder.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/image_placeholder.xml b/app/src/main/res/drawable/image_placeholder.xml
+new file mode 100644
+--- /dev/null	(date 1728958737216)
++++ b/app/src/main/res/drawable/image_placeholder.xml	(date 1728958737216)
+@@ -0,0 +1,7 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:tint="#979797" android:viewportHeight="24" android:viewportWidth="24" android:width="24dp">
++      
++    <path android:fillColor="@android:color/white" android:pathData="M21,5c0,-1.1 -0.9,-2 -2,-2H5.83L21,18.17V5z"/>
++      
++    <path android:fillColor="@android:color/white" android:pathData="M2.81,2.81L1.39,4.22L3,5.83V19c0,1.1 0.9,2 2,2h13.17l1.61,1.61l1.41,-1.41L2.81,2.81zM6,17l3,-4l2.25,3l0.82,-1.1l2.1,2.1H6z"/>
++    
++</vector>
+Index: app/src/main/java/com/alviano/cuan/beta/data/TransactionDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/data/TransactionDao.kt b/app/src/main/java/com/alviano/cuan/beta/data/TransactionDao.kt
+new file mode 100644
+--- /dev/null	(date 1728958737211)
++++ b/app/src/main/java/com/alviano/cuan/beta/data/TransactionDao.kt	(date 1728958737211)
+@@ -0,0 +1,29 @@
++package com.alviano.cuan.beta.data
++
++import androidx.lifecycle.LiveData
++import androidx.room.Dao
++import androidx.room.Delete
++import androidx.room.Insert
++import androidx.room.OnConflictStrategy
++import androidx.room.Query
++import androidx.room.Update
++import com.alviano.cuan.beta.model.TransactionModel
++
++@Dao
++interface TransactionDao {
++    @Insert(onConflict = OnConflictStrategy.IGNORE)
++    suspend fun addTransaction(transactionModel: TransactionModel)
++
++//    @Update
++//    suspend fun updateTransaction(transactionModel: TransactionModel)
++
++    @Delete
++    suspend fun deleteTransaction(transactionModel: TransactionModel)
++
++//    @Query("DELETE FROM transaction_table")
++//    suspend fun deleteAllTransaction()
++
++    @Query("SELECT * FROM transaction_table ORDER BY transactionId DESC")
++    fun readALlData(): LiveData<List<TransactionModel>>
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/alviano/cuan/beta/data/ProductDatabase.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/alviano/cuan/beta/data/ProductDatabase.kt b/app/src/main/java/com/alviano/cuan/beta/data/MainDatabase.kt
+rename from app/src/main/java/com/alviano/cuan/beta/data/ProductDatabase.kt
+rename to app/src/main/java/com/alviano/cuan/beta/data/MainDatabase.kt
+--- a/app/src/main/java/com/alviano/cuan/beta/data/ProductDatabase.kt	(revision 346ca4e9c6f49ffa1d35fe4f25e471424af2f9a2)
++++ b/app/src/main/java/com/alviano/cuan/beta/data/MainDatabase.kt	(date 1728958737211)
+@@ -4,22 +4,23 @@
+ import androidx.room.Database
+ import androidx.room.Room
+ import androidx.room.RoomDatabase
+-import com.alviano.cuan.beta.model.Product
++import com.alviano.cuan.beta.model.ProductModel
++import com.alviano.cuan.beta.model.TransactionModel
+ 
+ @Database(
+-    entities = [Product::class],
++    entities = [ProductModel::class],
+     version = 1,
+     exportSchema = false
+ )
+-abstract class ProductDatabase: RoomDatabase() {
++abstract class MainDatabase: RoomDatabase() {
+ 
+     abstract fun productDao(): ProductDao
+ 
+     companion object {
+         @Volatile
+-        private var INSTANCE: ProductDatabase? = null
++        private var INSTANCE: MainDatabase? = null
+ 
+-        fun getDatabase(context: Context): ProductDatabase {
++        fun getProductDatabase(context: Context): MainDatabase {
+             val tempInstance = INSTANCE
+             if (tempInstance != null) {
+                 return tempInstance
+@@ -27,8 +28,8 @@
+             synchronized(this){
+                 val instance = Room.databaseBuilder(
+                     context.applicationContext,
+-                    ProductDatabase::class.java,
+-                    "product_db"
++                    MainDatabase::class.java,
++                    "main_db"
+                 ).build()
+                 INSTANCE = instance
+                 return instance
+diff --git a/app/src/main/java/com/alviano/cuan/beta/fragment/ListProductFragment.kt b/app/src/main/java/com/alviano/cuan/beta/fragment/products/ListProductFragment.kt
+rename from app/src/main/java/com/alviano/cuan/beta/fragment/ListProductFragment.kt
+rename to app/src/main/java/com/alviano/cuan/beta/fragment/products/ListProductFragment.kt

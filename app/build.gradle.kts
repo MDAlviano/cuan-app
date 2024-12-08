@@ -77,4 +77,8 @@ dependencies {
     val coroutines_version = "1.3.9"
     implementation("androidx.room:room-ktx:$room_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+
+    // gson
+    implementation("com.google.code.gson:gson:2.8.9")
+
 }
