@@ -39,12 +39,12 @@ class TransactionViewModel(application: Application): AndroidViewModel(applicati
         }
     }
 
-    val totalPemasukan: LiveData<Int> = readAllData.map { transactionList ->
+    val totalPemasukan: LiveData<Long> = readAllData.map { transactionList ->
         transactionList.filter { it.transactionType == TransactionType.MASUK }
             .sumOf { it.totalAmount }
     }
 
-    val totalPengeluaran: LiveData<Int> = readAllData.map { transactionList ->
+    val totalPengeluaran: LiveData<Long> = readAllData.map { transactionList ->
         transactionList.filter { it.transactionType == TransactionType.KELUAR }
             .sumOf { it.totalAmount }
     }

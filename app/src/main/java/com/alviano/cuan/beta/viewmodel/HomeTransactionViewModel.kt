@@ -41,11 +41,11 @@ class HomeTransactionViewModel(application: Application): AndroidViewModel(appli
         transactions.filter { it.timestamp in todayStart..todayEnd }
     }
 
-    val todayIncome: LiveData<Int> = todayTransactions.map() { transactions ->
+    val todayIncome: LiveData<Long> = todayTransactions.map() { transactions ->
         transactions.filter { it.transactionType == TransactionType.MASUK }.sumOf { it.totalAmount }
     }
 
-    val todayExpense: LiveData<Int> = todayTransactions.map() { transactions ->
+    val todayExpense: LiveData<Long> = todayTransactions.map() { transactions ->
         transactions.filter { it.transactionType == TransactionType.KELUAR }.sumOf { it.totalAmount }
     }
 }

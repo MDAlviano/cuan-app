@@ -94,8 +94,8 @@ class UpdateProductActivity : AppCompatActivity() {
 
     private fun updateProductInDatabase() {
         val name = binding.updateNamaProdukTxt.text.toString()
-        val sellPrice = binding.updateHargaJuaTxt.text.toString().toIntOrNull()
-        val buyPrice = binding.updateHargaBeliTxt.text.toString().toIntOrNull()
+        val sellPrice = binding.updateHargaJuaTxt.text.toString().toLongOrNull()
+        val buyPrice = binding.updateHargaBeliTxt.text.toString().toLongOrNull()
 
         if (name.isBlank() || sellPrice == null || buyPrice == null) {
             Toast.makeText(this, "Harap isi semua kolom dengan benar!", Toast.LENGTH_SHORT).show()

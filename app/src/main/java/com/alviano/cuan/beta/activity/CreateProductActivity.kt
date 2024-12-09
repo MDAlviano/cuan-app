@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
-import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever.BitmapParams
 import android.net.Uri
 import android.os.Bundle
@@ -22,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.model.ProductModel
 import com.alviano.cuan.beta.viewmodel.ProductViewModel
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -29,7 +29,7 @@ import java.io.File
 class CreateProductActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: ProductViewModel
-    
+
     private lateinit var imageButton: ShapeableImageView
     private lateinit var btnBack: ImageButton
     private lateinit var saveButton: Button
@@ -78,20 +78,38 @@ class CreateProductActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        val imageUri: Uri? = data?.data
-        val source = imageUri?.let { ImageDecoder.createSource(this.contentResolver, it) }
-        val imageBitmap = source?.let { ImageDecoder.decodeBitmap(it) }
+//        val imageUri: Uri? = data?.data
+//        val source = imageUri?.let { ImageDecoder.createSource(this.contentResolver, it) }
+//        val imageBitmap = source?.let { ImageDecoder.decodeBitmap(it) }
+//
+//        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+//            imageButton.setImageBitmap(imageBitmap)
+//            imageButton.scaleType = ImageView.ScaleType.CENTER_CROP
+//            Toast.makeText(this, "Sukses menambahkan foto", Toast.LENGTH_LONG).show()
+//        } else {
+//            Toast.makeText(this, "Gagal menambahkan foto", Toast.LENGTH_LONG).show()
+//        }
 
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
-            imageButton.setImageBitmap(imageBitmap)
-            imageButton.scaleType = ImageView.ScaleType.CENTER_CROP
-            Toast.makeText(this, "Sukses menambahkan foto", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, "Gagal menambahkan foto", Toast.LENGTH_LONG).show()
+            val imageUri: Uri? = data?.data
+
+            if (imageUri != null) {
+                Glide.with(this)
+                    .load(imageUri)
+                    .centerCrop()
+                    .placeholder(R.drawable.image_placeholder)
+                    .into(imageButton)
+
+                Toast.makeText(this, "Sukses menambahkan foto", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Gagal menambahkan foto", Toast.LENGTH_LONG).show()
+            }
+
         }
     }
 
     private fun insertDataToDatabase() {
+
         // Get button drawable as bitmap
         val imageButtonBitmap: Bitmap = imageButton.drawable.toBitmap()
 
@@ -108,8 +126,8 @@ class CreateProductActivity : AppCompatActivity() {
                     productId = 0,
                     imagePath = imagePath,
                     name = productName,
-                    sellPrice = sellPrice.toInt(),
-                    buyPrice = buyPrice.toInt()
+                    sellPrice = sellPrice.toLong(),
+                    buyPrice = buyPrice.toLong()
                 )
             // Add data to database
             mViewModel.addProduct(productModel)
@@ -128,11 +146,11 @@ class CreateProductActivity : AppCompatActivity() {
 
     private fun saveImage(bitmap: Bitmap?): String? {
         return try {
-            val fileName = "product_image_${System.currentTimeMillis()}.png"
+            val fileName = "product_image_${System.currentTimeMillis()}.jpg"
             val file = File(filesDir, fileName)
 
             val outputStream = file.outputStream()
-            bitmap!!.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
             outputStream.flush()
             outputStream.close()
 

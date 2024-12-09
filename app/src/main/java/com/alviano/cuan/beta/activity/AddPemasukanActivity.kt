@@ -124,7 +124,7 @@ class AddPemasukanActivity : AppCompatActivity() {
 
             // Create user model
             val transactionModel =
-                TransactionModel(0, totalPemasukan.toInt(), tipeTransaksi, keterangan, tanggal, productDetailsJson)
+                TransactionModel(0, totalPemasukan.toLong(), tipeTransaksi, keterangan, tanggal, productDetailsJson)
             // Add data to database
             myViewModel.addTransaction(transactionModel)
             Toast.makeText(this, "Transaksi berhasil ditambahkan.", Toast.LENGTH_SHORT).show()

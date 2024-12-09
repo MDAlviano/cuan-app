@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "transaction_table")
 data class TransactionModel(
     @PrimaryKey(autoGenerate = true) val transactionId: Int,
-    val totalAmount: Int,
+    val totalAmount: Long,
     val transactionType: TransactionType,
     val description: String?,
     val timestamp: Long,

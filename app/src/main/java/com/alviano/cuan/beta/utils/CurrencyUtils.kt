@@ -9,7 +9,7 @@ import java.text.NumberFormat
 import java.util.Currency
 import java.util.Locale
 
-fun formatAsCurrency(amount: Int): String {
+fun formatAsCurrency(amount: Long): String {
     val format = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
     format.currency = Currency.getInstance("IDR")
     format.maximumFractionDigits = 0

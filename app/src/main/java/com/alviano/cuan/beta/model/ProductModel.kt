@@ -11,8 +11,8 @@ data class ProductModel(
     @PrimaryKey(autoGenerate = true) val productId: Int,
     val imagePath: String?,
     val name: String,
-    val sellPrice: Int,
-    val buyPrice: Int,
+    val sellPrice: Long,
+    val buyPrice: Long,
     var isSelected: Boolean = false,
     var quantity: Int = 0
 ) : Parcelable
