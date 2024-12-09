@@ -61,48 +61,12 @@ class AddPemasukanActivity : AppCompatActivity() {
 
             chooseProductActivity.show(supportFragmentManager, "ChooseProductFragment")
 
-            // tambahkan listener untuk menerima hasil
-//            bottomSheetDialog.setOnDismissListener {
-//                val selectedProducts = bottomSheetDialog.findViewById<RecyclerView>(R.id.allProduct)
-//                    ?.tag as? List<ProductModel>
-//                selectedProducts?.let { products ->
-//                    updateSelectedProducts(products)
-//                }
-//            }
-
-//            bottomSheetDialog.show()
-
         }
 
         binding.saveTransacPemasukan.setOnClickListener {
             addDataToDatabase()
         }
 
-    }
-
-    private fun showAddProductSheet() {
-        val dialogView = layoutInflater.inflate(R.layout.activity_choose_product, null)
-        val bottomSheetDialog = BottomSheetDialog(this, R.style.DialogAnimation)
-        bottomSheetDialog.setContentView(dialogView)
-
-        // Mengatur GridView di dalam BottomSheetDialog
-        val gridView = dialogView.findViewById<GridView>(R.id.allProduct)
-        val adapter = ChooseProductAdapter(this)
-        gridView.adapter = adapter
-
-        // Mengambil data dari ViewModel dan menghubungkan ke adapter
-        mProductViewModel.readAllData.observe(this, Observer { products ->
-            adapter.setData(products)
-        })
-
-        // Mengatur item click listener untuk GridView
-        gridView.setOnItemClickListener { _, _, position, _ ->
-            val product = adapter.getItem(position)
-            Toast.makeText(this, "You clicked on ${product.name}", Toast.LENGTH_SHORT).show()
-        }
-
-        // Menampilkan BottomSheetDialog
-//        bottomSheetDialog.show()
     }
 
     fun addDataToDatabase() {
@@ -120,7 +84,13 @@ class AddPemasukanActivity : AppCompatActivity() {
         // Input check
         if (inputCheck(totalPemasukan)) {
             // Konversi selected products ke JSON atau string untuk disimpan
-            val productDetailsJson = Gson().toJson(selectedProducts)
+            val productDetailsJson = if (selectedProducts.isNotEmpty()) {
+                Gson().toJson(selectedProducts)
+            } else {
+                null
+            }
+
+            Log.d("TransactionSave", "Product Details JSON: $productDetailsJson")
 
             // Create user model
             val transactionModel =
@@ -137,16 +107,9 @@ class AddPemasukanActivity : AppCompatActivity() {
     }
 
     private fun updateSelectedProducts(selectedProducts: List<ProductModel>) {
-        //  terima data dari choose product activity
-//        val data = intent.getParcelableExtra<ProductModel>(ChooseProductActivity.SELECTED_PRODUCTS_KEY)
-        // seharusnya adalah menangkap total barang yang dipilih, namun saya salah karena hanya memasukkan harga jual
-//        val totalPrice = data?.sellPrice
         // jika data total sellPrice berhasil dikirim, maka
         val totalPrice = selectedProducts.sumOf { it.sellPrice * it.quantity }
         binding.totalPemasukan.setText(totalPrice.toString())
-
-//        val productCountMap = selectedProducts.groupBy { it.name }
-//            .mapValues { it.value.size }
 
         val productDetails = selectedProducts.joinToString("\n") { product ->
             "${product.name} (${product.quantity})"

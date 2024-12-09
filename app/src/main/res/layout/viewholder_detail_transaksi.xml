@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/hargaProduk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -26,11 +26,11 @@
         android:textColor="@color/color8"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView20"
+        app:layout_constraintEnd_toStartOf="@+id/kuantitasProduk"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/kuantitasProduk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="(0)"

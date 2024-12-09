@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.alviano.cuan.beta.data.TransactionType
+import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -15,4 +16,10 @@ data class TransactionModel(
     val description: String?,
     val timestamp: Long,
     val productDetails: String?
-) : Parcelable
+) : Parcelable {
+    fun getParsedProductDetails(): List<ProductModel> {
+        return productDetails?.let {
+            Gson().fromJson(it, Array<ProductModel>::class.java).toList()
+        } ?: emptyList()
+    }
+}
