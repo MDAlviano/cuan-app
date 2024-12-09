@@ -14,4 +14,5 @@ data class TransactionModel(
     val transactionType: TransactionType,
     val description: String?,
     val timestamp: Long,
+    val productDetails: String?
 ) : Parcelable

@@ -35,7 +35,9 @@ class ProductAdapter(private val onItemClick: (ProductModel) -> Unit): RecyclerV
         }
 
         holder.binding.productName.text = product.name
-        holder.binding.productPrice.text = formatAsCurrency(product.sellPrice)
+
+        val formattedDataAmount = product.sellPrice
+        holder.binding.productPrice.text = formatAsCurrency(formattedDataAmount)
 
         holder.itemView.setOnClickListener {
             onItemClick(product)

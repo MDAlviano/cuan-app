@@ -12,5 +12,7 @@ data class ProductModel(
     val imagePath: String?,
     val name: String,
     val sellPrice: Int,
-    val buyPrice: Int
+    val buyPrice: Int,
+    var isSelected: Boolean = false,
+    var quantity: Int = 0
 ) : Parcelable

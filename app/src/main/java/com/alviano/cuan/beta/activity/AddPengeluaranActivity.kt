@@ -43,7 +43,7 @@ class AddPengeluaranActivity : AppCompatActivity() {
         val tanggal = System.currentTimeMillis()
 
         if (totalPengeluaran.isNotBlank()){
-            val transactionModel = TransactionModel(0, totalPengeluaran.toInt(), tipeTransaksi, keteranganPengeluaran, tanggal)
+            val transactionModel = TransactionModel(0, totalPengeluaran.toInt(), tipeTransaksi, keteranganPengeluaran, tanggal, null)
 
             myViewModel.addTransaction(transactionModel)
             Toast.makeText(this, "Transaksi berhasil ditambahkan.", Toast.LENGTH_SHORT).show()
