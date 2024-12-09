@@ -8,4 +8,19 @@
     <string name="totalPengeluaran">Rp15.000</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  header slider  -->
+    <string name="header1">Selamat Datang!</string>
+    <string name="header2">Halaman Utama</string>
+    <string name="header3">Riwayat Transaksi</string>
+    <string name="header4">Daftar Produk</string>
+    <string name="header5">Kamu sudah siap!</string>
+
+    <!--  description slider  -->
+    <string name="desc1">Catat keuanganmu sekarang!</string>
+    <string name="desc2">Di halaman ini, kamu bisa melihat total dari transaksimu hari ini. Ketuk tombol + untuk menambahkan transaksi baru</string>
+    <string name="desc3">Halaman ini berisi semua transaksimu beserta total keseluruhannya. Ketuk pada salah satu transaksi untuk melihat detailnya</string>
+    <string name="desc4">Di halaman ini, kamu bisa menambahkan template produk dengan mengetuk tombol +. Kamu bisa menggunakan template ini di dalam transaksimu</string>
+    <string name="desc5">Catat, Kelola, dan Pantau CUANmu, mulai dari sekarang!</string>
+
 </resources>
