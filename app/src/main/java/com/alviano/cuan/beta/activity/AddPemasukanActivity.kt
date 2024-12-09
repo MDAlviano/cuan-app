@@ -44,8 +44,8 @@ class AddPemasukanActivity : AppCompatActivity() {
 
         myViewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
 
-        totalAmount = findViewById(R.id.totalPemasukan)
-        description = findViewById(R.id.keteranganPemasukan)
+        totalAmount = binding.totalPemasukan
+        description = binding.keteranganPemasukan
 
         binding.saveTransacPemasukan.setOnClickListener {
             addDataToDatabase()
@@ -84,7 +84,8 @@ class AddPemasukanActivity : AppCompatActivity() {
     fun addDataToDatabase() {
         val totalPemasukan = totalAmount.text.toString()
         val tipeTransaksi = TransactionType.MASUK
-        val keterangan = description.text.toString()
+        val keteranganText = description.text.toString().trim()
+        val keterangan = if (keteranganText.isBlank()) null else keteranganText
         val tanggal = System.currentTimeMillis()
         Log.i("tanggal", tanggal.toString())
 

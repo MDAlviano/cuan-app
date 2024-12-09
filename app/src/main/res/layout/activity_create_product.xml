@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color3"
-        android:paddingVertical="4dp"
+        android:paddingVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -73,8 +73,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="upload image"
                 android:scaleType="centerInside"
-                app:shapeAppearanceOverlay="@style/RoundedCorners"
-                app:srcCompat="@drawable/upload_image" />
+                app:shapeAppearanceOverlay="@style/RoundedCorners" />
         </LinearLayout>
 
         <LinearLayout

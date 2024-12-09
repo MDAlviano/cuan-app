@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever.BitmapParams
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
 import com.alviano.cuan.beta.R
@@ -27,7 +29,7 @@ import java.io.File
 class CreateProductActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: ProductViewModel
-
+    
     private lateinit var imageButton: ShapeableImageView
     private lateinit var btnBack: ImageButton
     private lateinit var saveButton: Button
@@ -79,7 +81,6 @@ class CreateProductActivity : AppCompatActivity() {
         val imageUri: Uri? = data?.data
         val source = imageUri?.let { ImageDecoder.createSource(this.contentResolver, it) }
         val imageBitmap = source?.let { ImageDecoder.decodeBitmap(it) }
-//        Log.d("imageDataBitmap", imageBitmap.toString())
 
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             imageButton.setImageBitmap(imageBitmap)
@@ -91,7 +92,6 @@ class CreateProductActivity : AppCompatActivity() {
     }
 
     private fun insertDataToDatabase() {
-
         // Get button drawable as bitmap
         val imageButtonBitmap: Bitmap = imageButton.drawable.toBitmap()
 
@@ -126,13 +126,13 @@ class CreateProductActivity : AppCompatActivity() {
         return productName.isNotBlank() && sellPrice.isNotBlank() && buyPrice.isNotBlank()
     }
 
-    private fun saveImage(bitmap: Bitmap): String? {
+    private fun saveImage(bitmap: Bitmap?): String? {
         return try {
-            val fileName = "product_image_${System.currentTimeMillis()}.jpg"
+            val fileName = "product_image_${System.currentTimeMillis()}.png"
             val file = File(filesDir, fileName)
 
             val outputStream = file.outputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            bitmap!!.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
             outputStream.flush()
             outputStream.close()
 

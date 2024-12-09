@@ -8,36 +8,23 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.activity.CreateProductActivity
-import com.alviano.cuan.beta.activity.CreateProductActivity.Companion
 import com.alviano.cuan.beta.databinding.ActivityUpdateProductBinding
 import com.alviano.cuan.beta.model.ProductModel
 import com.alviano.cuan.beta.viewmodel.ProductViewModel
-import java.io.ByteArrayOutputStream
 import java.io.File
 
-class UpdateProductActivty : AppCompatActivity() {
+class UpdateProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUpdateProductBinding
-
     private lateinit var mProductViewModel: ProductViewModel
-
     private lateinit var selectedProduct: ProductModel
-
-    companion object {
-        const val IMAGE_REQUEST_CODE = 100
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +48,8 @@ class UpdateProductActivty : AppCompatActivity() {
         binding.updateHargaJuaTxt.setText(selectedProduct.sellPrice.toString())
         binding.updateHargaBeliTxt.setText(selectedProduct.buyPrice.toString())
 
+
+
         binding.btnUpdateImg.setOnClickListener {
             pickImageGallery()
         }
@@ -75,7 +64,7 @@ class UpdateProductActivty : AppCompatActivity() {
             deleteProduct()
         }
 
-        binding.btnBack.setOnClickListener{
+        binding.btnBack.setOnClickListener {
             finish()
         }
     }
@@ -146,9 +135,11 @@ class UpdateProductActivty : AppCompatActivity() {
     private fun deleteProduct() {
         val builder = AlertDialog.Builder(this)
         builder.setPositiveButton("Yes") { _, _ ->
+            selectedProduct.imagePath?.let { deleteImageLocally(it) }
+
             mProductViewModel.deleteProduct(selectedProduct)
             Toast.makeText(this, "Berhasil menghapus", Toast.LENGTH_SHORT).show()
-            finish() // Kembali ke ListProductFragment
+            finish()
         }
         builder.setNegativeButton("No") { _, _ -> }
         builder.setTitle("Hapus ${selectedProduct.name}?")
@@ -162,7 +153,7 @@ class UpdateProductActivty : AppCompatActivity() {
             val file = File(filesDir, fileName)
 
             val outputStream = file.outputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
             outputStream.flush()
             outputStream.close()
 

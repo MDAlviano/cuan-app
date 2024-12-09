@@ -38,7 +38,8 @@ class AddPengeluaranActivity : AppCompatActivity() {
     fun addDataToDatabase() {
         val totalPengeluaran = totalPengeluaranInput.text.toString()
         val tipeTransaksi = TransactionType.KELUAR
-        val keteranganPengeluaran = keteranganPengeluaranInput.text.toString()
+        val keteranganText = keteranganPengeluaranInput.text.toString().trim()
+        val keteranganPengeluaran = if (keteranganText.isBlank()) null else keteranganText
         val tanggal = System.currentTimeMillis()
 
         if (totalPengeluaran.isNotBlank()){
@@ -49,7 +50,7 @@ class AddPengeluaranActivity : AppCompatActivity() {
             // Finish activity
             finish()
         } else {
-            Toast.makeText(this, "Harap isi kolom total atau pilih produk.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Harap isi kolom total transaksi.", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -12,6 +12,6 @@ data class TransactionModel(
     @PrimaryKey(autoGenerate = true) val transactionId: Int,
     val totalAmount: Int,
     val transactionType: TransactionType,
-    val description: String,
+    val description: String?,
     val timestamp: Long,
 ) : Parcelable

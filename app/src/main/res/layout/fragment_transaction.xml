@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color3"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -96,7 +96,7 @@
                     android:layout_marginBottom="3dp"
                     android:text="Rp. 0"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -108,7 +108,7 @@
                 android:background="@color/gray"
                 android:layout_width="1dp"
                 android:layout_height="85dp"
-                android:layout_marginBottom="19dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
                 app:layout_constraintStart_toEndOf="@+id/constraintLayout6" />
@@ -140,7 +140,7 @@
                     android:layout_marginBottom="3dp"
                     android:text="Rp. 0"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -165,10 +165,11 @@
             android:layout_marginHorizontal="4dp"
             android:layout_marginTop="15dp"
             android:background="@color/white"
-            android:paddingBottom="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
+            tools:listitem="@layout/viewholder_transacmasuk_transacpage"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addTransactionBtn"

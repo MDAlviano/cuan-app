@@ -9,13 +9,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 //import com.alviano.cuan.beta.data.Product
 //import com.alviano.cuan.beta.fragment.products.ProductAdapter
 import com.alviano.cuan.beta.R
 import com.alviano.cuan.beta.fragment.transaction.TransactionFragment
 import com.alviano.cuan.beta.activity.CreateProductActivity
-import com.alviano.cuan.beta.activity.update.UpdateProductActivty
+import com.alviano.cuan.beta.activity.update.UpdateProductActivity
 import com.alviano.cuan.beta.databinding.FragmentListProductBinding
 import com.alviano.cuan.beta.fragment.report.ReportFragment
 import com.alviano.cuan.beta.fragment.home.HomeFragment
@@ -40,11 +39,11 @@ class ListProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ProductAdapter { selectedProduct ->
-            val intent = Intent(activity, UpdateProductActivty::class.java)
+            val intent = Intent(activity, UpdateProductActivity::class.java)
             intent.putExtra("selected_product", selectedProduct) // Kirim data produk
             activity?.startActivity(intent)
         }
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
